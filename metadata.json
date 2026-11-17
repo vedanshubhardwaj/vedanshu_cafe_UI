@@ -1,0 +1,6 @@
+{
+  "name": "Linden & Hearth",
+  "description": "Botanical courtyard café and wood-fired sourdough bakery offering single-origin pour-overs, seasonal tasting flights, and courtyard table reservations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

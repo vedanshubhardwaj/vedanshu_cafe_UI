@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valley Grain & Roast — Specialty Coffee & Heritage Bakehouse</title>
-  <meta name="description" content="Sun-drenched specialty coffee roastery and woodfired heritage bakery. Sourdough pastries, single-origin pour overs, and golden-hour hospitality.">
+  <title>Valley Grain & Roast — Specialty Roasters & Heritage Bakehouse</title>
+  <meta name="description" content="Sun-drenched vineyard specialty coffee and woodfired heritage bakery. Minimal intervention, single-origin pour overs, and golden-hour hospitality.">
 
-  <!-- Google Fonts: Fraunces (Romie substitute) & Barlow Condensed (Arial Narrow substitute) -->
+  <!-- Google Fonts: Fraunces (Romie substitute) & Barlow Condensed (Arial Narrow substitute) & DM Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- GSAP & ScrollTrigger for Lethal Scroll Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -27,6 +31,9 @@
             'terracotta-glow': '#e3a36e',
             'apricot-whisper': '#efa164',
             'vine-sage': '#d8deb7',
+            'dusk-lavender': '#957c96',
+            'sunset-peach': '#f2a679',
+            'hearth-rust': '#a85032',
           },
           fontFamily: {
             romie: ['Fraunces', 'Georgia', 'serif'],
@@ -47,7 +54,6 @@
   </script>
 
   <style>
-    /* CSS Custom Properties from Fallen Grape Style Guide */
     :root {
       --color-vintage-cream: #ece0d2;
       --color-bone-white: #f3f3f3;
@@ -60,20 +66,11 @@
 
       --font-romie: 'Fraunces', Georgia, serif;
       --font-arial-narrow: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-
-      --page-max-width: 1200px;
-      --section-gap: 80px;
-
-      /* Strict Fallen Grape geometry: 0px radius, no shadows */
-      --radius-cards: 0px;
-      --radius-badges: 0px;
-      --radius-inputs: 0px;
-      --radius-buttons: 0px;
     }
 
     * {
-      border-radius: 0 !important; /* Enforces 0px radius rule across all elements */
-      box-shadow: none !important; /* Enforces 0 elevation / shadowless wine-label aesthetic */
+      border-radius: 0px !important;
+      box-shadow: none !important;
     }
 
     body {
@@ -82,6 +79,8 @@
       font-family: var(--font-arial-narrow);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      margin: 0;
+      padding: 0;
     }
 
     /* Editorial serif typography */
@@ -97,16 +96,18 @@
       letter-spacing: 0.0430em;
     }
 
-    /* Custom Hairline Borders */
+    /* Hairline borders matching screenshot reference */
     .border-saddle {
-      border-color: var(--color-saddle-brown);
+      border: 1px solid var(--color-saddle-brown);
+    }
+    .border-b-saddle {
+      border-bottom: 1px solid var(--color-saddle-brown);
+    }
+    .border-t-saddle {
+      border-top: 1px solid var(--color-saddle-brown);
     }
 
-    .border-walnut {
-      border-color: var(--color-walnut-ink);
-    }
-
-    /* Button variants */
+    /* Buttons strictly with 0px radius & Fallen Grape colors */
     .btn-peach-sand {
       background-color: var(--color-peach-sand);
       color: var(--color-walnut-ink);
@@ -115,10 +116,11 @@
       text-transform: uppercase;
       letter-spacing: 0.0630em;
       font-weight: 700;
-      transition: background-color 0.15s ease, opacity 0.15s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .btn-peach-sand:hover {
       background-color: var(--color-terracotta-glow);
+      transform: translateY(-1px);
     }
 
     .btn-terracotta {
@@ -129,268 +131,452 @@
       text-transform: uppercase;
       letter-spacing: 0.0630em;
       font-weight: 700;
-      transition: background-color 0.15s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .btn-terracotta:hover {
       background-color: var(--color-apricot-whisper);
+      transform: translateY(-1px);
     }
 
-    .btn-outlined-saddle {
-      background-color: transparent;
-      color: var(--color-walnut-ink);
-      border: 1px solid var(--color-saddle-brown);
-      font-family: var(--font-arial-narrow);
-      text-transform: uppercase;
-      letter-spacing: 0.0630em;
-      font-weight: 600;
-      transition: background-color 0.15s ease;
-    }
-    .btn-outlined-saddle:hover {
-      background-color: var(--color-peach-sand);
+    /* Micro Paper Texture */
+    .paper-texture {
+      background-image: radial-gradient(#573d21 0.45px, transparent 0.45px);
+      background-size: 26px 26px;
+      opacity: 0.035;
+      pointer-events: none;
     }
 
-    /* Custom Scrollbar in warm earth tone */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+    /* Lethal Opening Curtain Animations */
+    #preloader {
+      transition: transform 1.1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
     }
-    ::-webkit-scrollbar-track {
-      background: var(--color-vintage-cream);
+    .curtain-open {
+      transform: translateY(-100%);
+      pointer-events: none;
     }
-    ::-webkit-scrollbar-thumb {
-      background: var(--color-saddle-brown);
+
+    /* Keyframes for Floating Wildlife (Butterflies, Dragonflies) */
+    @keyframes flutterLeft {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate(14px, -18px) rotate(8deg) scale(1.04); }
+      50% { transform: translate(-8px, -30px) rotate(-6deg) scale(0.96); }
+      75% { transform: translate(20px, -12px) rotate(4deg) scale(1.02); }
+    }
+    @keyframes flutterRight {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      30% { transform: translate(-18px, -14px) rotate(-10deg); }
+      70% { transform: translate(12px, -24px) rotate(8deg); }
+    }
+    @keyframes mothFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(25px, -15px) rotate(6deg); }
+    }
+    @keyframes vineSwayLeft {
+      0%, 100% { transform: rotate(0deg); transform-origin: top left; }
+      50% { transform: rotate(1.8deg); transform-origin: top left; }
+    }
+    @keyframes vineSwayRight {
+      0%, 100% { transform: rotate(0deg); transform-origin: top right; }
+      50% { transform: rotate(-2deg); transform-origin: top right; }
+    }
+    @keyframes steamRise {
+      0% { opacity: 0; transform: translateY(0) scaleX(1); }
+      40% { opacity: 0.45; }
+      100% { opacity: 0; transform: translateY(-45px) scaleX(1.4); }
+    }
+
+    .anim-flutter-left { animation: flutterLeft 7s ease-in-out infinite; }
+    .anim-flutter-right { animation: flutterRight 6s ease-in-out infinite; }
+    .anim-moth { animation: mothFloat 8s ease-in-out infinite; }
+    .anim-vine-left { animation: vineSwayLeft 9s ease-in-out infinite; }
+    .anim-vine-right { animation: vineSwayRight 8.5s ease-in-out infinite; }
+    .anim-steam-1 { animation: steamRise 3.5s ease-out infinite; }
+    .anim-steam-2 { animation: steamRise 4s ease-out 1.5s infinite; }
+
+    /* Custom Scroll Progress Bar */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2.5px;
+      background: var(--color-terracotta-glow);
+      z-index: 100;
+      width: 0%;
+      transition: width 0.1s ease-out;
     }
 
     /* Modal Backdrop */
     .modal-backdrop {
-      background: rgba(87, 61, 33, 0.45);
-      backdrop-filter: blur(2px);
-    }
-
-    /* Vintage Paper Grain Overlay */
-    .paper-texture {
-      background-image: radial-gradient(#573d21 0.45px, transparent 0.45px);
-      background-size: 24px 24px;
-      opacity: 0.035;
-      pointer-events: none;
+      background: rgba(87, 61, 33, 0.55);
+      backdrop-filter: blur(4px);
     }
   </style>
 </head>
-<body class="min-h-screen relative flex flex-col">
+<body class="relative">
 
   <!-- Micro Paper Texture Overlay -->
-  <div class="fixed inset-0 paper-texture z-50"></div>
+  <div class="fixed inset-0 paper-texture z-40"></div>
 
-  <!-- 1. ANNOUNCEMENT BAR -->
-  <div class="w-full bg-[#efa164] text-[#573d21] py-1.5 px-4 text-center border-b border-[#7c664d]">
-    <div class="max-w-[1200px] mx-auto flex items-center justify-center gap-3 text-xs md:text-sm font-condensed tracking-wider font-semibold uppercase">
-      <span class="inline-block w-1.5 h-1.5 bg-[#573d21]"></span>
-      <span>AUTUMN HARVEST ROASTS & WILD SOURDOUGH CROISSANTS PULLED FRESH HOURLY</span>
-      <span class="hidden md:inline">•</span>
-      <span class="hidden md:inline">WALK-INS WELCOME & ONLINE RESERVATIONS OPEN</span>
-      <span class="inline-block w-1.5 h-1.5 bg-[#573d21]"></span>
+  <!-- Scroll Progress Indicator -->
+  <div id="scrollProgress"></div>
+
+  <!-- =========================================================================
+       0. LETHAL OPENING PRELOADER CURTAIN
+       ========================================================================= -->
+  <div id="preloader" class="fixed inset-0 z-50 bg-[#ece0d2] border-b-2 border-[#573d21] flex flex-col items-center justify-center p-6 select-none">
+    <div class="text-center max-w-lg">
+      <div class="w-16 h-16 border border-[#573d21] mx-auto mb-6 flex items-center justify-center bg-[#f3f3f3] relative">
+        <span class="font-serif-romie text-2xl font-bold text-[#573d21]">V</span>
+        <div class="absolute -inset-1 border border-dashed border-[#7c664d] animate-spin" style="animation-duration: 22s;"></div>
+      </div>
+      <span class="block font-condensed tracking-[0.3em] text-xs uppercase text-[#7c664d] mb-2">Artisanal Micro-Roastery & Viennoiserie</span>
+      <h1 class="font-serif-romie text-4xl sm:text-5xl text-[#573d21] font-normal leading-tight tracking-wide mb-4">
+        Valley Grain & Roast
+      </h1>
+      <p class="font-serif-romie italic text-sm text-[#573d21]/75 mb-6">
+        minimal intervention. slow mornings at golden hour.
+      </p>
+      <div class="w-48 h-1 bg-[#f3f3f3] border border-[#7c664d] mx-auto overflow-hidden">
+        <div id="loaderBar" class="h-full bg-[#e3a36e] w-0 transition-all duration-700 ease-out"></div>
+      </div>
     </div>
   </div>
 
-  <!-- 2. HEADER NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-[#f3f3f3] border-b border-[#7c664d]">
-    <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+  <!-- =========================================================================
+       1. TOP ANNOUNCEMENT BAR (Matching Screenshot 1 & 2)
+       ========================================================================= -->
+  <div class="w-full bg-[#efa164] text-[#573d21] py-1.5 px-4 text-center border-b border-[#7c664d] relative z-30">
+    <div class="max-w-[1200px] mx-auto flex items-center justify-center gap-3 text-xs sm:text-[13px] font-condensed tracking-[0.05em] font-semibold uppercase">
+      <span>'THE HARVEST FAVORITES' MORNING 3-PACK NOW AVAILABLE!</span>
+      <span class="hidden sm:inline">•</span>
+      <span class="hidden md:inline">CAST-IRON ROASTED ETHIOPIA GEISHA & 72-HR WILD CROISSANTS</span>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. HEADER NAVIGATION WITH PILLS (Exact Fallen Grape Nav Architecture)
+       ========================================================================= -->
+  <header class="sticky top-0 z-30 bg-[#ece0d2] border-b border-[#7c664d] transition-all duration-300" id="mainHeader">
+    <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between">
       
-      <!-- Left Nav Links -->
-      <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-condensed tracking-wider font-semibold text-[#573d21]">
-        <a href="#menu" class="hover:text-[#e3a36e] transition-colors py-1">MENU & BAKES</a>
-        <a href="#story" class="hover:text-[#e3a36e] transition-colors py-1">OUR CRAFT</a>
-        <a href="#gallery" class="hover:text-[#e3a36e] transition-colors py-1">THE AMBIANCE</a>
-        <a href="#reserve" class="hover:text-[#e3a36e] transition-colors py-1">RESERVATIONS</a>
+      <!-- Left Pill Buttons (Matching Screenshot 1) -->
+      <nav class="hidden md:flex items-center gap-2">
+        <!-- Shop Dropdown Pill -->
+        <div class="relative group">
+          <a href="#menu" class="px-3.5 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#7c664d] text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] inline-flex items-center gap-1 transition-colors">
+            <span>MENU ALL</span>
+            <span class="text-[10px]">∨</span>
+          </a>
+          <!-- Dropdown Menu -->
+          <div class="absolute left-0 top-full mt-1 w-48 bg-[#f3f3f3] border border-[#7c664d] p-2 hidden group-hover:block z-50">
+            <a href="#menu" onclick="filterMenu('coffee')" class="block px-3 py-1.5 text-xs font-condensed font-bold uppercase text-[#573d21] hover:bg-[#e1c6ab]">Specialty Coffees</a>
+            <a href="#menu" onclick="filterMenu('viennoiserie')" class="block px-3 py-1.5 text-xs font-condensed font-bold uppercase text-[#573d21] hover:bg-[#e1c6ab]">Heritage Pastries</a>
+            <a href="#menu" onclick="filterMenu('sourdough')" class="block px-3 py-1.5 text-xs font-condensed font-bold uppercase text-[#573d21] hover:bg-[#e1c6ab]">Woodfired Tartines</a>
+            <a href="#menu" onclick="filterMenu('seasonal')" class="block px-3 py-1.5 text-xs font-condensed font-bold uppercase text-[#573d21] hover:bg-[#e1c6ab]">Autumn Harvest Roast</a>
+          </div>
+        </div>
+
+        <a href="#threePack" class="px-3.5 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#7c664d] text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] transition-colors">
+          3-PACK BOX
+        </a>
+
+        <a href="#aboutSection" class="px-3.5 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#7c664d] text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] transition-colors">
+          ABOUT US
+        </a>
       </nav>
 
-      <!-- Center Brand Wordmark (Fraunces / Romie voice) -->
+      <!-- Center Brand Wordmark with stacked subtitle (Matching Screenshot 1) -->
       <div class="text-center">
-        <a href="#" class="inline-block group">
-          <span class="block text-[10px] tracking-[0.25em] font-condensed font-semibold text-[#7c664d] uppercase mb-0.5">Specialty Roasters & Bakehouse</span>
-          <h1 class="text-2xl md:text-3xl font-serif-romie font-bold text-[#573d21] tracking-wide leading-none group-hover:text-[#a35438] transition-colors">
-            VALLEY GRAIN & ROAST
-          </h1>
-          <span class="block text-[9px] tracking-[0.2em] font-condensed text-[#7c664d] uppercase mt-0.5">EST. 2021 • VINEYARD RIDGE</span>
+        <a href="#" class="inline-flex items-center gap-1.5 group">
+          <span class="font-serif-romie text-2xl md:text-3xl font-normal text-[#573d21] tracking-wide leading-none group-hover:text-[#a85032] transition-colors">
+            Valley Grain
+          </span>
+          <span class="font-serif-romie text-[9px] uppercase tracking-tighter text-[#7c664d] border-l border-[#7c664d] pl-1 text-left leading-tight">
+            Roast<br>& Co.
+          </span>
         </a>
       </div>
 
-      <!-- Right Utility Actions -->
-      <div class="flex items-center gap-3 md:gap-5 text-sm font-condensed tracking-wider font-semibold text-[#573d21]">
-        <a href="#reserve" class="hidden sm:inline-block px-3.5 py-1.5 text-xs bg-[#e1c6ab] border border-[#573d21] hover:bg-[#e3a36e] transition-colors font-bold">
-          BOOK A TABLE
+      <!-- Right Pill Buttons (Matching Screenshot 1) -->
+      <div class="flex items-center gap-2">
+        <a href="#reserve" class="px-3.5 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#7c664d] text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] transition-colors hidden sm:inline-block">
+          RESERVE
         </a>
-        <button id="cartBtn" class="flex items-center gap-1.5 px-3 py-1.5 border border-[#7c664d] bg-[#f3f3f3] hover:bg-[#e1c6ab] transition-colors text-xs font-bold">
+
+        <button onclick="toggleCartDrawer()" class="px-3.5 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#7c664d] text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] transition-colors flex items-center gap-1.5">
           <span>TRAY</span>
-          <span id="cartCountBadge" class="bg-[#573d21] text-[#f3f3f3] px-1.5 py-0.2 text-[11px] leading-tight font-mono">0</span>
+          <span id="headerCartCount" class="bg-[#573d21] text-[#f3f3f3] px-1 text-[10px] font-mono leading-none">0</span>
         </button>
-        <!-- Mobile Menu Toggle -->
-        <button id="mobileMenuBtn" class="md:hidden p-1.5 border border-[#7c664d] text-[#573d21] hover:bg-[#e1c6ab]">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" class="md:hidden px-2.5 py-1.5 bg-[#e1c6ab] border border-[#7c664d] text-[#573d21]">
+          ☰
         </button>
       </div>
+
     </div>
 
     <!-- Mobile Nav Drawer -->
-    <div id="mobileMenu" class="hidden md:hidden bg-[#f3f3f3] border-t border-[#7c664d] px-6 py-5 flex flex-col gap-4 text-sm font-condensed tracking-wider font-bold">
-      <a href="#menu" class="hover:text-[#e3a36e] py-1 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">MENU & BAKES</a>
-      <a href="#story" class="hover:text-[#e3a36e] py-1 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">OUR CRAFT</a>
-      <a href="#gallery" class="hover:text-[#e3a36e] py-1 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">THE AMBIANCE</a>
-      <a href="#reserve" class="hover:text-[#e3a36e] py-1 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">RESERVE A TABLE</a>
-      <a href="#visiting" class="hover:text-[#e3a36e] py-1" onclick="toggleMobileMenu()">HOURS & LOCATION</a>
+    <div id="mobileMenu" class="hidden md:hidden bg-[#f3f3f3] border-t border-[#7c664d] px-6 py-4 flex flex-col gap-2 font-condensed text-xs font-bold uppercase">
+      <a href="#heroIllustration" class="py-2 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">Home & Harvest</a>
+      <a href="#threePack" class="py-2 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">The 3-Pack</a>
+      <a href="#menu" class="py-2 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">Signature Menu & Bakes</a>
+      <a href="#aboutSection" class="py-2 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">About Our Craft</a>
+      <a href="#gallery" class="py-2 border-b border-[#e1c6ab]" onclick="toggleMobileMenu()">Atmosphere Gallery</a>
+      <a href="#reserve" class="py-2 text-[#a85032]" onclick="toggleMobileMenu()">Reserve a Table →</a>
     </div>
   </header>
 
-  <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-grow">
+  <main>
 
-    <!-- 3. HERO SECTION (Sun-drenched vineyard & golden hour craft) -->
-    <section class="relative border-b border-[#7c664d] bg-[#ece0d2] overflow-hidden">
+    <!-- =========================================================================
+         3. FULL-BLEED ILLUSTRATED LANDSCAPE HERO (Exact Match to Screenshot 2)
+         Interactive SVG scene with sunset sky, rolling hills, vines, floating
+         butterflies, centered silhouette bottle/carafe, "It's natural", and CTA.
+         ========================================================================= -->
+    <section id="heroIllustration" class="relative w-full overflow-hidden border-b border-[#7c664d] select-none" style="min-height: 85vh;">
       
-      <!-- Top Decorative Botanical Tag -->
-      <div class="max-w-[1200px] mx-auto px-4 md:px-8 pt-8 md:pt-12 pb-4 text-center">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#d8deb7] border border-[#7c664d] text-[#573d21] text-xs font-condensed tracking-widest uppercase font-bold mb-4">
-          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-            <path d="M12 2C6.5 2 2 6.5 2 12c0 3.6 1.9 6.8 4.8 8.6L12 22l5.2-1.4C20.1 18.8 22 15.6 22 12c0-5.5-4.5-10-10-10zm0 18.2L8 19c-2.3-1.4-3.8-3.9-3.8-6.7 0-4.3 3.5-7.8 7.8-7.8s7.8 3.5 7.8 7.8c0 2.8-1.5 5.3-3.8 6.7l-4 1.2z"/>
+      <!-- Layer 1: Illustrated Full-Bleed Sky & Landscape Canvas -->
+      <div class="absolute inset-0 w-full h-full">
+        <svg class="w-full h-full object-cover" viewBox="0 0 1440 820" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Sunset Sky Gradient (Golden Peach to Dusky Violet) -->
+            <linearGradient id="skyGrad" x1="720" y1="0" x2="720" y2="820" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#EEDAC5"/>
+              <stop offset="28%" stop-color="#E8BFA0"/>
+              <stop offset="55%" stop-color="#EAA678"/>
+              <stop offset="82%" stop-color="#C292A1"/>
+              <stop offset="100%" stop-color="#8E6E84"/>
+            </linearGradient>
+
+            <!-- Rolling Mountain Gradients -->
+            <linearGradient id="mountBack" x1="720" y1="420" x2="720" y2="680" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#A58299"/>
+              <stop offset="100%" stop-color="#735368"/>
+            </linearGradient>
+            <linearGradient id="mountMid" x1="720" y1="520" x2="720" y2="760" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#846678"/>
+              <stop offset="100%" stop-color="#55444D"/>
+            </linearGradient>
+            <linearGradient id="mountFront" x1="720" y1="620" x2="720" y2="820" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#5E6349"/>
+              <stop offset="100%" stop-color="#3C3D28"/>
+            </linearGradient>
+
+            <!-- Glow Filter for Sunset Silhouette -->
+            <filter id="amberGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="18" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+
+          <!-- Sky Backdrop -->
+          <rect width="1440" height="820" fill="url(#skyGrad)"/>
+
+          <!-- Distant Sun Rays -->
+          <circle cx="720" cy="460" r="190" fill="#FCE5B5" opacity="0.32" filter="url(#amberGlow)"/>
+
+          <!-- Mountain Layer 1: Distant Dusk Lavender -->
+          <path id="hillBack" class="parallax-layer" data-speed="0.2" d="M-100 520 Q 200 440 450 510 T 950 490 T 1540 500 L 1540 820 L -100 820 Z" fill="url(#mountBack)"/>
+
+          <!-- Mountain Layer 2: Mid-distance Plum -->
+          <path id="hillMid" class="parallax-layer" data-speed="0.4" d="M-100 580 Q 240 520 620 590 T 1180 570 T 1540 610 L 1540 820 L -100 820 Z" fill="url(#mountMid)"/>
+
+          <!-- Mountain Layer 3: Foreground Vineyard Green Ridges -->
+          <path id="hillFront" class="parallax-layer" data-speed="0.6" d="M-100 660 Q 320 600 720 670 T 1250 640 T 1540 680 L 1540 820 L -100 820 Z" fill="url(#mountFront)"/>
+
+          <!-- Hanging Grape & Coffee Plant Vines Left (Matching Screenshot 2) -->
+          <g class="anim-vine-left" id="vineLeftGroup">
+            <!-- Vine Stems -->
+            <path d="M-20 -20 Q 80 140 30 320 Q -10 440 -40 500" stroke="#7A8B6F" stroke-width="6" fill="none"/>
+            <path d="M40 -10 Q 120 180 90 280" stroke="#687B5E" stroke-width="4" fill="none"/>
+            
+            <!-- Hanging Grape / Coffee Clusters (Sage green clusters) -->
+            <ellipse cx="60" cy="110" rx="38" ry="46" fill="#B4C9AF" opacity="0.95"/>
+            <ellipse cx="40" cy="170" rx="42" ry="50" fill="#A1BA9B" opacity="0.95"/>
+            <ellipse cx="90" cy="190" rx="36" ry="48" fill="#B7CCB2" opacity="0.95"/>
+            <ellipse cx="65" cy="250" rx="36" ry="44" fill="#95AF8F" opacity="0.95"/>
+            <ellipse cx="125" cy="270" rx="38" ry="46" fill="#AEC4A9" opacity="0.95"/>
+            <ellipse cx="100" cy="330" rx="34" ry="42" fill="#8AA584" opacity="0.95"/>
+            <ellipse cx="70" cy="390" rx="28" ry="36" fill="#7D9877" opacity="0.95"/>
+            
+            <!-- Botanical Leaves -->
+            <path d="M-30 80 C 40 40 120 90 140 160 C 90 190 30 180 -30 80 Z" fill="#829976" opacity="0.9"/>
+            <path d="M-20 280 C 50 240 130 280 145 350 C 90 380 40 370 -20 280 Z" fill="#758B6A" opacity="0.9"/>
+          </g>
+
+          <!-- Hanging Grape & Coffee Plant Vines Right (Matching Screenshot 2) -->
+          <g class="anim-vine-right" id="vineRightGroup">
+            <!-- Vine Stems -->
+            <path d="M1460 -20 Q 1360 140 1410 320 Q 1450 440 1480 500" stroke="#7A8B6F" stroke-width="6" fill="none"/>
+            <!-- Hanging Clusters -->
+            <ellipse cx="1380" cy="110" rx="38" ry="46" fill="#B4C9AF" opacity="0.95"/>
+            <ellipse cx="1400" cy="170" rx="42" ry="50" fill="#A1BA9B" opacity="0.95"/>
+            <ellipse cx="1350" cy="190" rx="36" ry="48" fill="#B7CCB2" opacity="0.95"/>
+            <ellipse cx="1375" cy="250" rx="36" ry="44" fill="#95AF8F" opacity="0.95"/>
+            <ellipse cx="1315" cy="270" rx="38" ry="46" fill="#AEC4A9" opacity="0.95"/>
+            <ellipse cx="1340" cy="330" rx="34" ry="42" fill="#8AA584" opacity="0.95"/>
+            <ellipse cx="1370" cy="390" rx="28" ry="36" fill="#7D9877" opacity="0.95"/>
+            <!-- Leaves -->
+            <path d="M1470 80 C 1400 40 1320 90 1300 160 C 1350 190 1410 180 1470 80 Z" fill="#829976" opacity="0.9"/>
+            <path d="M1460 280 C 1390 240 1310 280 1295 350 C 1350 380 1400 370 1460 280 Z" fill="#758B6A" opacity="0.9"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Wildlife Motif 1: Teal Green Butterfly Left (From Screenshot 2) -->
+      <div class="absolute left-[12%] sm:left-[16%] top-[24%] sm:top-[28%] z-10 anim-flutter-left cursor-pointer" title="Wild Vineyard Pollinator">
+        <svg class="w-12 h-12 sm:w-16 sm:h-16 drop-shadow-sm" viewBox="0 0 80 80" fill="none">
+          <!-- Wings -->
+          <path d="M40 40 C 20 15 5 25 10 45 C 15 55 35 48 40 40 Z" fill="#4B816F"/>
+          <path d="M40 40 C 60 15 75 25 70 45 C 65 55 45 48 40 40 Z" fill="#4B816F"/>
+          <path d="M40 40 C 25 45 20 62 30 68 C 38 72 40 55 40 40 Z" fill="#699E8B"/>
+          <path d="M40 40 C 55 45 60 62 50 68 C 42 72 40 55 40 40 Z" fill="#699E8B"/>
+          <!-- Body & Antennae -->
+          <ellipse cx="40" cy="42" rx="2" ry="12" fill="#2A3D34"/>
+          <path d="M40 30 Q 36 22 30 20 M40 30 Q 44 22 50 20" stroke="#2A3D34" stroke-width="1.2"/>
+        </svg>
+      </div>
+
+      <!-- Wildlife Motif 2: Pink Dragonfly Right (From Screenshot 2) -->
+      <div class="absolute right-[14%] sm:right-[18%] top-[34%] sm:top-[38%] z-10 anim-flutter-right">
+        <svg class="w-12 h-12 sm:w-16 sm:h-16" viewBox="0 0 80 80" fill="none">
+          <!-- Wings -->
+          <ellipse cx="30" cy="30" rx="18" ry="4" transform="rotate(-30 30 30)" fill="#E1B8D1" opacity="0.8"/>
+          <ellipse cx="50" cy="30" rx="18" ry="4" transform="rotate(30 50 30)" fill="#E1B8D1" opacity="0.8"/>
+          <ellipse cx="32" cy="38" rx="14" ry="3" transform="rotate(-15 32 38)" fill="#D4A1C3" opacity="0.75"/>
+          <ellipse cx="48" cy="38" rx="14" ry="3" transform="rotate(15 48 38)" fill="#D4A1C3" opacity="0.75"/>
+          <!-- Dragonfly Body -->
+          <ellipse cx="40" cy="36" rx="2.5" ry="18" fill="#8E5377"/>
+        </svg>
+      </div>
+
+      <!-- Wildlife Motif 3: Warm Earth Moth Bottom Left (From Screenshot 2) -->
+      <div class="absolute left-[18%] sm:left-[22%] bottom-[12%] sm:bottom-[16%] z-10 anim-moth">
+        <svg class="w-12 h-10 sm:w-14 sm:h-12" viewBox="0 0 70 60" fill="none">
+          <path d="M35 30 C 20 15 10 20 15 38 C 20 48 30 42 35 30 Z" fill="#8C6F56"/>
+          <path d="M35 30 C 50 15 60 20 55 38 C 50 48 40 42 35 30 Z" fill="#8C6F56"/>
+          <ellipse cx="25" cy="30" rx="4" ry="4" fill="#ECD3BA"/>
+          <ellipse cx="45" cy="30" rx="4" ry="4" fill="#ECD3BA"/>
+          <ellipse cx="35" cy="32" rx="2.5" ry="10" fill="#4A3423"/>
+        </svg>
+      </div>
+
+      <!-- Layer 2: Centerpiece Glowing Silhouette & Editorial Text (Matching Screenshot 2) -->
+      <div class="relative z-20 flex flex-col items-center justify-center min-h-[85vh] px-4 pt-12 pb-16 text-center">
+        
+        <!-- The Glowing Centerpiece Silhouette (Artisan Bottle / Cold Brew Carafe) -->
+        <div class="relative group cursor-pointer" onclick="document.getElementById('threePack').scrollIntoView({behavior: 'smooth'})">
+          
+          <!-- Steam Trails rising from bottle/carafe neck -->
+          <div class="absolute -top-12 left-1/2 -translate-x-1/2 flex gap-2 pointer-events-none">
+            <svg class="w-6 h-12 anim-steam-1 text-[#f3f3f3]" viewBox="0 0 24 48" fill="none" stroke="currentColor">
+              <path d="M12 44 Q 4 30 14 18 T 10 2" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <svg class="w-6 h-12 anim-steam-2 text-[#f3f3f3]" viewBox="0 0 24 48" fill="none" stroke="currentColor">
+              <path d="M10 44 Q 18 32 8 20 T 14 2" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <!-- Bottle Silhouette SVG in Glowing Terracotta/Apricot -->
+          <svg class="w-36 h-72 sm:w-44 sm:h-84 md:w-52 md:h-96 mx-auto transition-transform duration-500 group-hover:scale-[1.02]" viewBox="0 0 200 440" fill="none">
+            <!-- Bottle Outer Body -->
+            <path d="M88 15 C 88 10 94 6 100 6 C 106 6 112 10 112 15 L 112 85 C 112 120 165 160 165 240 L 165 410 C 165 422 155 432 142 432 L 58 432 C 45 432 35 422 35 410 L 35 240 C 35 160 88 120 88 85 Z" fill="#F49553"/>
+            <!-- Inner Light Reflection -->
+            <path d="M96 25 L 96 85 C 96 125 48 165 48 245 L 48 400" stroke="#FCE5B5" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+            <!-- Stamped Paper Tear Label (Matching Screenshot 1 & 2 label shape) -->
+            <path d="M48 230 Q 80 220 120 225 Q 155 220 152 245 Q 158 280 150 315 Q 155 350 140 355 Q 90 365 52 355 Q 45 320 50 285 Q 42 250 48 230 Z" fill="#EF985A"/>
+            <!-- Stamped Wordmark on Label -->
+            <text x="100" y="275" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="20" fill="#573D21" font-weight="bold">Valley</text>
+            <text x="100" y="298" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="20" fill="#573D21" font-weight="bold">Roast</text>
+            <text x="100" y="325" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-size="9" fill="#573D21" letter-spacing="2" font-weight="bold">NATURAL PROCESS</text>
           </svg>
-          <span>Small Batch Micro-Roastery & 72-Hour Hearth Viennoiserie</span>
         </div>
 
-        <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-serif-romie font-normal text-[#573d21] leading-[1.12] tracking-wide max-w-4xl mx-auto mt-2 mb-6">
-          Slow mornings, wild grain, & coffee poured at golden hour.
+        <!-- Overlaid Headline: "It's natural" (Matching Screenshot 2) -->
+        <h2 class="font-serif-romie text-4xl sm:text-5xl md:text-6xl text-[#FAF6F0] font-normal leading-tight tracking-wide drop-shadow-sm -mt-6 mb-6">
+          It's natural.
         </h2>
 
-        <p class="font-serif-romie text-base sm:text-lg md:text-xl text-[#573d21]/90 max-w-2xl mx-auto leading-relaxed mb-8">
-          Crafted like fine natural wine. Single-origin washed coffees roasted on cast iron, alongside heritage wheat sourdough and caramelized butter laminations.
-        </p>
-
-        <!-- CTA Action Buttons -->
-        <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
-          <a href="#reserve" class="btn-terracotta px-8 py-3.5 text-sm md:text-base border border-[#573d21] inline-flex items-center gap-2">
-            <span>RESERVE A MORNING TABLE</span>
-            <span>→</span>
-          </a>
-          <a href="#menu" class="btn-peach-sand px-7 py-3.5 text-sm md:text-base border border-[#573d21] inline-flex items-center gap-2">
-            <span>EXPLORE MENU & TASTING NOTES</span>
+        <!-- Centered CTA Button: "SHOP ALL" (Matching Screenshot 2) -->
+        <div class="flex items-center justify-center">
+          <a href="#menu" class="btn-terracotta px-10 py-3.5 text-xs sm:text-sm font-condensed font-bold uppercase tracking-[0.1em] text-[#573d21] border border-[#573d21]">
+            EXPLORE THE MENU & BAKES
           </a>
         </div>
-      </div>
 
-      <!-- Illustrated & Photographic Showcase Banner (3-Panel Wine-Label Grid) -->
-      <div class="max-w-[1200px] mx-auto px-4 md:px-8 pb-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 border border-[#7c664d] bg-[#f3f3f3]">
-          
-          <!-- Panel 1: Sourdough Craft -->
-          <div class="border-b md:border-b-0 md:border-r border-[#7c664d] p-5 flex flex-col justify-between">
-            <div class="relative overflow-hidden aspect-[4/3] mb-4 border border-[#7c664d] bg-[#ece0d2]">
-              <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" alt="Fresh artisan sourdough and croissants" class="w-full h-full object-cover">
-              <span class="absolute top-2 left-2 bg-[#f3f3f3] border border-[#7c664d] px-2 py-0.5 text-[11px] font-condensed tracking-wider font-bold text-[#573d21]">
-                72-HR LAMINATION
-              </span>
-            </div>
-            <div>
-              <span class="text-[11px] font-mono text-[#7c664d] uppercase block">Bakehouse Hearth</span>
-              <h3 class="font-serif-romie text-lg text-[#573d21] font-bold mt-1">Valrhona & Brown Butter Swirl</h3>
-              <p class="font-serif-romie text-xs text-[#573d21]/80 mt-1.5 leading-relaxed">Stone-milled heritage grains with wild sourdough ferment and caramelized honey finish.</p>
-            </div>
-          </div>
-
-          <!-- Panel 2: Center Feature (Specialty Pour Over) -->
-          <div class="border-b md:border-b-0 md:border-r border-[#7c664d] p-5 flex flex-col justify-between bg-[#ece0d2]/40">
-            <div class="relative overflow-hidden aspect-[4/3] mb-4 border border-[#7c664d] bg-[#ece0d2]">
-              <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Specialty pour over coffee" class="w-full h-full object-cover">
-              <span class="absolute top-2 left-2 bg-[#d8deb7] border border-[#7c664d] px-2 py-0.5 text-[11px] font-condensed tracking-wider font-bold text-[#573d21]">
-                SINGLE ORIGIN
-              </span>
-            </div>
-            <div>
-              <span class="text-[11px] font-mono text-[#7c664d] uppercase block">Cast-Iron Drum Roast</span>
-              <h3 class="font-serif-romie text-lg text-[#573d21] font-bold mt-1">Sidama Yirgacheffe G1 Bloom</h3>
-              <p class="font-serif-romie text-xs text-[#573d21]/80 mt-1.5 leading-relaxed">Floral jasmine, bergamot peach nectar, and a clean honeycomb finish extracted at 93°C.</p>
-            </div>
-          </div>
-
-          <!-- Panel 3: Sunlit Ambiance -->
-          <div class="p-5 flex flex-col justify-between">
-            <div class="relative overflow-hidden aspect-[4/3] mb-4 border border-[#7c664d] bg-[#ece0d2]">
-              <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="Sunlit coffeehouse ambiance" class="w-full h-full object-cover">
-              <span class="absolute top-2 left-2 bg-[#e1c6ab] border border-[#7c664d] px-2 py-0.5 text-[11px] font-condensed tracking-wider font-bold text-[#573d21]">
-                VINEYARD TERRACE
-              </span>
-            </div>
-            <div>
-              <span class="text-[11px] font-mono text-[#7c664d] uppercase block">The Sanctuary</span>
-              <h3 class="font-serif-romie text-lg text-[#573d21] font-bold mt-1">Sun-Drenched Garden Patio</h3>
-              <p class="font-serif-romie text-xs text-[#573d21]/80 mt-1.5 leading-relaxed">Timber tables, fig leaf shade, and birdsong. An unhurried morning retreat.</p>
-            </div>
-          </div>
-
-        </div>
       </div>
 
     </section>
 
-    <!-- 4. BRAND STORY & PHILOSOPHY ("The Craft & The Hearth") -->
-    <section id="story" class="py-20 border-b border-[#7c664d] bg-[#f3f3f3]">
+    <!-- =========================================================================
+         4. MINIMAL STATEMENT & "THE 3-PACK" (Exact Match to Screenshot 1)
+         ========================================================================= -->
+    <section id="threePack" class="py-16 md:py-24 border-b border-[#7c664d] bg-[#ece0d2]">
       <div class="max-w-[1200px] mx-auto px-4 md:px-8">
         
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Floating Minimal Intervention Subtitle (From Screenshot 1) -->
+        <div class="text-center mb-10">
+          <span class="font-serif-romie italic text-3xl sm:text-4xl md:text-5xl text-[#573d21]/80 block font-normal tracking-wide">
+            minimal intervention.
+          </span>
+          <h2 class="font-serif-romie font-bold italic text-3xl sm:text-4xl md:text-5xl text-[#573d21] mt-8">
+            The 3-Pack
+          </h2>
+        </div>
+
+        <!-- 3-Column Image Showcase with Stamped Paper Tear Labels (From Screenshot 1) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           
-          <!-- Left Column: Story Imagery with Paper Stamp -->
-          <div class="lg:col-span-5 relative">
-            <div class="border border-[#7c664d] bg-[#ece0d2] p-3">
-              <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1000&q=80" alt="Artisan coffee barista and roaster" class="w-full aspect-[4/5] object-cover border border-[#7c664d]">
+          <!-- Card 1: Cold Brew & Rosé Bloom in Ice Bath -->
+          <div class="bg-[#f3f3f3] border border-[#7c664d] group cursor-pointer flex flex-col justify-between" onclick="addToCart('The Chilled Trio • 3-Pack Cold Harvest', 38.00, '3-Pack')">
+            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30">
+              <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Specialty cold coffee bottles" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <!-- Paper Tear Orange Stamp on photo (Matching Screenshot 1) -->
+              <div class="absolute bottom-6 left-6 bg-[#efa164] border border-[#573d21] p-3 -rotate-6 text-[#573d21]">
+                <span class="font-serif-romie text-base font-bold block leading-tight">Valley<br>Cold Brew</span>
+                <span class="font-mono text-[9px] uppercase tracking-wider block mt-0.5">Macerated</span>
+              </div>
             </div>
-            <!-- Vintage Paper Stamp Motif -->
-            <div class="absolute -bottom-5 -right-5 bg-[#e3a36e] border border-[#573d21] p-4 text-center hidden sm:block">
-              <span class="block font-mono text-[10px] tracking-widest text-[#573d21] font-bold">WILD CULTURE</span>
-              <span class="font-serif-romie text-xl text-[#573d21] font-bold leading-tight">EST. NO. 42</span>
-              <span class="block font-condensed text-[10px] tracking-wider text-[#573d21] uppercase">Valley Roasters</span>
+            <div class="p-5 text-center">
+              <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">01. The Chilled Micro-Lot Trio</h3>
+              <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Single-origin cold extractions bottled at dawn.</p>
+              <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$38.00</span>
             </div>
           </div>
 
-          <!-- Right Column: Editorial Copy -->
-          <div class="lg:col-span-7 flex flex-col justify-center">
-            <div class="inline-block self-start border-b border-[#7c664d] pb-1 mb-4">
-              <span class="text-xs font-condensed font-bold tracking-[0.1em] text-[#7c664d] uppercase">Our Origin & Ethos</span>
-            </div>
-
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif-romie font-normal text-[#573d21] leading-tight mb-6">
-              "We believe coffee and bread belong together—both require yeast, patience, heat, and time."
-            </h2>
-
-            <div class="space-y-4 font-serif-romie text-sm md:text-base text-[#573d21]/90 leading-relaxed">
-              <p>
-                Founded on the perimeter of old sunlit vineyards, Valley Grain & Roast was built on a simple conviction: respect the agricultural harvest. Just as natural winemakers preserve the grape’s terroir, our roasting profile never masks the origin of the seed.
-              </p>
-              <p>
-                Every loaf of sourdough and laminated viennoiserie in our pastry vitrine begins with a wild fermented levain fed continuously since 2018. We partner directly with smallholder coffee farms in Colombia, Ethiopia, and Guatemala, paying 3.5× Fair Trade minimums for harvest lots dried slowly on raised African beds.
-              </p>
-            </div>
-
-            <!-- 3 Pillars Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 mt-6 border-t border-[#7c664d]">
-              <div class="border border-[#7c664d] bg-[#ece0d2] p-4">
-                <span class="font-mono text-xs text-[#7c664d] block">01 / DIRECT HARVEST</span>
-                <h4 class="font-serif-romie font-bold text-sm text-[#573d21] mt-1">Direct Sourcing</h4>
-                <p class="font-condensed text-xs text-[#573d21]/80 mt-1 uppercase">100% single origin with transparent farm traceability.</p>
-              </div>
-
-              <div class="border border-[#7c664d] bg-[#ece0d2] p-4">
-                <span class="font-mono text-xs text-[#7c664d] block">02 / SLOW FERMENT</span>
-                <h4 class="font-serif-romie font-bold text-sm text-[#573d21] mt-1">72-Hour Levain</h4>
-                <p class="font-condensed text-xs text-[#573d21]/80 mt-1 uppercase">Wild yeast, French Normandy butter, stoneground grain.</p>
-              </div>
-
-              <div class="border border-[#7c664d] bg-[#ece0d2] p-4">
-                <span class="font-mono text-xs text-[#7c664d] block">03 / CAST IRON</span>
-                <h4 class="font-serif-romie font-bold text-sm text-[#573d21] mt-1">Nordic Style Roast</h4>
-                <p class="font-condensed text-xs text-[#573d21]/80 mt-1 uppercase">Light-medium roast curve highlighting natural fruit sweetness.</p>
+          <!-- Card 2: 72-Hour Sourdough Viennoiserie Box -->
+          <div class="bg-[#f3f3f3] border border-[#7c664d] group cursor-pointer flex flex-col justify-between" onclick="addToCart('The Bakehouse Box • 3 Hearth Bakes', 18.00, '3-Pack')">
+            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30">
+              <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" alt="Artisan croissant box" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <!-- Paper Tear Terracotta Stamp on photo (Matching Screenshot 1) -->
+              <div class="absolute bottom-6 right-6 bg-[#e3a36e] border border-[#573d21] p-3 rotate-3 text-[#573d21]">
+                <span class="font-serif-romie text-base font-bold block leading-tight">Wild<br>Lamination</span>
+                <span class="font-mono text-[9px] uppercase tracking-wider block mt-0.5">Normandy Butter</span>
               </div>
             </div>
+            <div class="p-5 text-center">
+              <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">02. The Hearth Bakehouse Box</h3>
+              <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Cardamom knot, almond frangipane, & Valrhona swirl.</p>
+              <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$18.00</span>
+            </div>
+          </div>
 
+          <!-- Card 3: Wine Glasses & Tasting Flights -->
+          <div class="bg-[#f3f3f3] border border-[#7c664d] group cursor-pointer flex flex-col justify-between" onclick="addToCart('The Golden Hour Flight • Cupping Set', 44.00, '3-Pack')">
+            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30">
+              <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80" alt="Coffee tasting glasses and ceramics" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <!-- Paper Tear Apricot Stamp on photo (Matching Screenshot 1) -->
+              <div class="absolute top-6 left-6 bg-[#efa164] border border-[#573d21] p-3 -rotate-3 text-[#573d21]">
+                <span class="font-serif-romie text-base font-bold block leading-tight">Sensory<br>Flight</span>
+                <span class="font-mono text-[9px] uppercase tracking-wider block mt-0.5">3 Varietals</span>
+              </div>
+            </div>
+            <div class="p-5 text-center">
+              <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">03. The Tasting Room Flight</h3>
+              <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Stemware, washed Geisha, and paired honey loaf.</p>
+              <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$44.00</span>
+            </div>
           </div>
 
         </div>
@@ -398,210 +584,283 @@
       </div>
     </section>
 
-    <!-- 5. SIGNATURE MENU SHOWCASE (Bone-white cards, 1px saddle borders, tasting notes) -->
-    <section id="menu" class="py-20 border-b border-[#7c664d] bg-[#ece0d2]">
+    <!-- =========================================================================
+         5. TWO-COLUMN ABOUT SECTION (Exact Match to Screenshot 3)
+         Illustrated bottle & glass on purple table on the left, "ABOUT US" header
+         with top/bottom hairline borders on the right, and rich serif copy.
+         ========================================================================= -->
+    <section id="aboutSection" class="py-20 md:py-28 border-b border-[#7c664d] bg-[#ece0d2]">
       <div class="max-w-[1200px] mx-auto px-4 md:px-8">
         
-        <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <span class="text-xs font-condensed font-bold tracking-[0.12em] text-[#7c664d] uppercase block mb-2">Curated Seasonal Offerings</span>
-          <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif-romie font-normal text-[#573d21]">The Signature Menu & Bakes</h2>
-          <p class="font-serif-romie text-sm md:text-base text-[#573d21]/80 mt-3">
-            Handcrafted with organic grains, heirloom dairy, and micro-lot coffees roasted on site.
-          </p>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-center">
+          
+          <!-- Left Column: Illustrated Art Poster (Directly recreating Screenshot 3 art!) -->
+          <div class="md:col-span-5 border border-[#7c664d] bg-[#f3f3f3] p-4">
+            <div class="relative w-full aspect-[4/5] bg-gradient-to-b from-[#D4C3A3] via-[#E2BFA2] to-[#8E7085] border border-[#7c664d] overflow-hidden flex flex-col justify-end items-center p-6">
+              
+              <!-- Illustrated Table (Lilac purple table from Screenshot 3) -->
+              <div class="w-full h-24 bg-[#937C9B] border-t border-[#573d21] absolute bottom-0 inset-x-0"></div>
 
-          <!-- Category Filter Tabs (Fallen Grape Arial Narrow buttons) -->
-          <div class="flex flex-wrap justify-center gap-2 mt-8" id="menuTabs">
-            <button onclick="filterMenu('all')" class="menu-tab-btn active px-4 py-2 text-xs md:text-sm font-condensed font-bold uppercase tracking-wider bg-[#573d21] text-[#f3f3f3] border border-[#573d21]">
-              ALL SELECTIONS (12)
+              <!-- Illustrated Carafe & Glass Sitting on Table (From Screenshot 3) -->
+              <div class="relative z-10 flex items-end justify-center gap-4 mb-2">
+                
+                <!-- Bottle/Carafe with Stamped Tear Label -->
+                <div class="w-24 sm:w-28 relative">
+                  <svg viewBox="0 0 100 240" fill="none">
+                    <path d="M42 10 L 58 10 L 58 50 C 58 75 88 100 88 150 L 88 238 L 12 238 L 12 150 C 12 100 42 75 42 50 Z" fill="#F49553"/>
+                    <!-- Torn Label on Carafe (Screenshot 3) -->
+                    <path d="M20 130 Q 50 120 78 128 Q 84 165 80 190 Q 50 198 20 188 Z" fill="#EF985A"/>
+                    <text x="50" y="155" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="12" fill="#573D21" font-weight="bold">Valley</text>
+                    <text x="50" y="170" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="12" fill="#573D21" font-weight="bold">Roast</text>
+                  </svg>
+                </div>
+
+                <!-- Stemware Wine/Coffee Glass (Screenshot 3) -->
+                <div class="w-16 sm:w-20 relative">
+                  <svg viewBox="0 0 70 180" fill="none">
+                    <!-- Glass Bowl with Amber Brew -->
+                    <path d="M12 20 L 58 20 L 58 70 C 58 95 35 110 35 110 C 35 110 12 95 12 70 Z" fill="#FDF3E7" stroke="#573D21" stroke-width="1.5"/>
+                    <path d="M14 42 L 56 42 L 56 70 C 56 90 35 104 35 104 C 35 104 14 90 14 70 Z" fill="#F4A261"/>
+                    <!-- Stem & Base -->
+                    <line x1="35" y1="110" x2="35" y2="165" stroke="#573D21" stroke-width="2"/>
+                    <line x1="18" y1="165" x2="52" y2="165" stroke="#573D21" stroke-width="2"/>
+                  </svg>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Column: ABOUT US with top/bottom hairline borders (Screenshot 3) -->
+          <div class="md:col-span-7">
+            
+            <!-- Hairline Top Border on Heading -->
+            <div class="border-t border-[#7c664d] pt-3 mb-6">
+              <h3 class="font-condensed italic font-bold text-2xl sm:text-3xl tracking-wider text-[#573d21] uppercase">
+                ABOUT US
+              </h3>
+            </div>
+
+            <!-- Narrative Paragraphs in Romie Serif (Screenshot 3) -->
+            <div class="space-y-6 font-serif-romie text-sm sm:text-base text-[#573d21]/90 leading-relaxed border-b border-[#7c664d] pb-8">
+              <p>
+                At Valley Grain & Roast we work with generational farmers, coffee pickers, and heritage millers to bring excellent, low-intervention roasts and wild sourdough straight from the agricultural valley. From our organically farmed coffee cherries all the way down to local stoneground flour and daily hand-shaping, we do as much of the work by hand as we can to ensure sustainability and preservation of the bean’s natural beauty.
+              </p>
+              <p>
+                We started Valley Grain & Roast simply because we believe there’s something really great about slow fermentation and unhurried mornings, and we want to make it available to everyone. Whether you’re enjoying an early pour over with friends or a quiet hour in the sunlit courtyard with fresh bread, a cup of our roast is the perfect companion! To be savored warm and enjoyed by all.
+              </p>
+            </div>
+
+            <!-- Founder Signoff Stamp -->
+            <div class="pt-6 flex items-center justify-between">
+              <div>
+                <span class="font-mono text-[11px] text-[#7c664d] uppercase block">FOUNDED BY THE BROTHERS VANCE</span>
+                <span class="font-serif-romie font-bold text-sm text-[#573d21]">Sonoma Ridge • Est. 2021</span>
+              </div>
+              <a href="#reserve" class="btn-peach-sand px-6 py-2.5 text-xs font-condensed font-bold uppercase tracking-wider">
+                VISIT THE HEARTH →
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         6. THE SIGNATURE MENU & TASTING NOTES (Interactive Cards)
+         ========================================================================= -->
+    <section id="menu" class="py-20 border-b border-[#7c664d] bg-[#f3f3f3]">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="font-condensed font-bold text-xs uppercase tracking-[0.2em] text-[#7c664d] block mb-2">Handmade Daily in Limited Batches</span>
+          <h2 class="font-serif-romie text-3xl sm:text-4xl md:text-5xl font-normal text-[#573d21]">The Signature Menu</h2>
+          <p class="font-serif-romie text-sm text-[#573d21]/80 mt-2">Filter by specialty roasts, 72-hour sourdough viennoiserie, or hearth plates.</p>
+
+          <!-- Category Filter Buttons -->
+          <div class="flex flex-wrap justify-center gap-2 mt-6">
+            <button onclick="filterMenu('all')" class="menu-tab-btn active px-3.5 py-1.5 text-xs font-condensed font-bold uppercase tracking-wider bg-[#573d21] text-[#f3f3f3] border border-[#573d21]">
+              ALL (6)
             </button>
-            <button onclick="filterMenu('coffee')" class="menu-tab-btn px-4 py-2 text-xs md:text-sm font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
-              SPECIALTY COFFEES
+            <button onclick="filterMenu('coffee')" class="menu-tab-btn px-3.5 py-1.5 text-xs font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
+              COFFEE & POUR OVERS
             </button>
-            <button onclick="filterMenu('viennoiserie')" class="menu-tab-btn px-4 py-2 text-xs md:text-sm font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
-              VIENNOISERIE & PASTRIES
+            <button onclick="filterMenu('viennoiserie')" class="menu-tab-btn px-3.5 py-1.5 text-xs font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
+              VIENNOISERIE
             </button>
-            <button onclick="filterMenu('sourdough')" class="menu-tab-btn px-4 py-2 text-xs md:text-sm font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
-              HEARTH SOURDOUGH & PLATES
+            <button onclick="filterMenu('sourdough')" class="menu-tab-btn px-3.5 py-1.5 text-xs font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
+              HEARTH SOURDOUGH
             </button>
-            <button onclick="filterMenu('seasonal')" class="menu-tab-btn px-4 py-2 text-xs md:text-sm font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
+            <button onclick="filterMenu('seasonal')" class="menu-tab-btn px-3.5 py-1.5 text-xs font-condensed font-bold uppercase tracking-wider bg-[#f3f3f3] text-[#573d21] border border-[#7c664d] hover:bg-[#e1c6ab]">
               AUTUMN HARVEST
             </button>
           </div>
         </div>
 
-        <!-- Menu Grid: Bone White Cards with 1px Saddle Brown borders, 0px radius -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="menuGrid">
+        <!-- Menu Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="menuCardsGrid">
           
-          <!-- Item 1: Geisha Pour Over -->
-          <div class="menu-card bg-[#f3f3f3] border border-[#7c664d] flex flex-col justify-between" data-category="coffee">
+          <!-- Item 1: Geisha V60 -->
+          <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="coffee">
             <div>
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=700&q=80" alt="Panama Geisha pour over" class="w-full h-full object-cover">
-                <span class="absolute top-2.5 right-2.5 bg-[#e3a36e] border border-[#573d21] text-[#573d21] text-[11px] font-condensed font-bold px-2 py-0.5 uppercase">
-                  RESERVE LOT
+                <span class="absolute top-2.5 right-2.5 bg-[#e3a36e] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
+                  SINGLE ORIGIN
                 </span>
               </div>
               <div class="p-5">
-                <div class="flex items-baseline justify-between gap-2 border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed text-lg font-bold text-[#573d21] uppercase tracking-wide">Panama Boquete Geisha V60</h3>
-                  <span class="font-serif-romie font-bold text-base text-[#573d21]">$9.50</span>
+                <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Panama Boquete Geisha V60</h3>
+                  <span class="font-serif-romie font-bold text-sm text-[#573d21]">$9.50</span>
                 </div>
-                <div class="font-mono text-[11px] text-[#7c664d] uppercase mb-2">
-                  JASMINE • WHITE PEACH • RAW BERGAMOT
-                </div>
+                <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">JASMINE • PEACH NECTAR • BERGAMOT</span>
                 <p class="font-serif-romie text-xs text-[#573d21]/80 leading-relaxed">
-                  Naturally processed micro-lot from Finca Deborah, 1,950m elevation. Hand-poured with mineral-calibrated spring water.
+                  Natural process micro-lot extracted at 93°C on Japanese stone-filtered spring water.
                 </p>
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Panama Boquete Geisha V60', 9.50, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
+              <button onclick="addToCart('Panama Boquete Geisha V60', 9.50, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
                 + ADD TO MORNING TRAY
               </button>
             </div>
           </div>
 
-          <!-- Item 2: Cardamom & Brown Butter Knot -->
-          <div class="menu-card bg-[#f3f3f3] border border-[#7c664d] flex flex-col justify-between" data-category="viennoiserie">
+          <!-- Item 2: Cardamom Knot -->
+          <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="viennoiserie">
             <div>
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
-                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" alt="Cardamom knot pastry" class="w-full h-full object-cover">
-                <span class="absolute top-2.5 right-2.5 bg-[#d8deb7] border border-[#573d21] text-[#573d21] text-[11px] font-condensed font-bold px-2 py-0.5 uppercase">
-                  DAILY BAKE
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" alt="Cardamom pastry" class="w-full h-full object-cover">
+                <span class="absolute top-2.5 right-2.5 bg-[#d8deb7] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
+                  HEARTH BAKE
                 </span>
               </div>
               <div class="p-5">
-                <div class="flex items-baseline justify-between gap-2 border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed text-lg font-bold text-[#573d21] uppercase tracking-wide">Cardamom & Toasted Rye Knot</h3>
-                  <span class="font-serif-romie font-bold text-base text-[#573d21]">$5.75</span>
+                <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Cardamom & Toasted Rye Knot</h3>
+                  <span class="font-serif-romie font-bold text-sm text-[#573d21]">$5.75</span>
                 </div>
-                <div class="font-mono text-[11px] text-[#7c664d] uppercase mb-2">
-                  GREEN CARDAMOM • NORMANDY BUTTER • DEMERARA CRUST
-                </div>
+                <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">GREEN CARDAMOM • NORMANDY BUTTER</span>
                 <p class="font-serif-romie text-xs text-[#573d21]/80 leading-relaxed">
-                  Swedish-style twisted sourdough brioche laced with freshly crushed whole pods and crunchy pearl sugar crystals.
+                  Wild levain brioche twisted with freshly ground green cardamom pods and crunchy Demerara sugar.
                 </p>
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Cardamom & Toasted Rye Knot', 5.75, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
+              <button onclick="addToCart('Cardamom & Toasted Rye Knot', 5.75, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
                 + ADD TO MORNING TRAY
               </button>
             </div>
           </div>
 
-          <!-- Item 3: Smoked Sea Salt Flat White -->
-          <div class="menu-card bg-[#f3f3f3] border border-[#7c664d] flex flex-col justify-between" data-category="coffee">
+          <!-- Item 3: Smoked Flat White -->
+          <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="coffee">
             <div>
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
-                <img src="https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=700&q=80" alt="Velvet microfoam flat white" class="w-full h-full object-cover">
-                <span class="absolute top-2.5 right-2.5 bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] text-[11px] font-condensed font-bold px-2 py-0.5 uppercase">
+                <img src="https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=700&q=80" alt="Flat white" class="w-full h-full object-cover">
+                <span class="absolute top-2.5 right-2.5 bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
                   HOUSE SIGNATURE
                 </span>
               </div>
               <div class="p-5">
-                <div class="flex items-baseline justify-between gap-2 border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed text-lg font-bold text-[#573d21] uppercase tracking-wide">Hearth Smoked Flat White</h3>
-                  <span class="font-serif-romie font-bold text-base text-[#573d21]">$6.00</span>
+                <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Smoked Oak Salt Flat White</h3>
+                  <span class="font-serif-romie font-bold text-sm text-[#573d21]">$6.00</span>
                 </div>
-                <div class="font-mono text-[11px] text-[#7c664d] uppercase mb-2">
-                  OAT / GRASS-FED WHOLE • PRALINE • OAK SMOKE PINCH
-                </div>
+                <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">OAT MILK • PRALINE • BARREL WOOD SALT</span>
                 <p class="font-serif-romie text-xs text-[#573d21]/80 leading-relaxed">
-                  Double ristretto of our Valley Roast with silky micro-foam, kissed with smoked oak salt and raw date syrup.
+                  Double espresso with velvety micro-foam, finished with oak barrel smoked sea salt and raw date nectar.
                 </p>
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Hearth Smoked Flat White', 6.00, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
+              <button onclick="addToCart('Smoked Oak Salt Flat White', 6.00, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
                 + ADD TO MORNING TRAY
               </button>
             </div>
           </div>
 
-          <!-- Item 4: Heritage Wild Sourdough Tartine -->
-          <div class="menu-card bg-[#f3f3f3] border border-[#7c664d] flex flex-col justify-between" data-category="sourdough">
+          <!-- Item 4: Fig & Ricotta Tartine -->
+          <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="sourdough">
             <div>
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
-                <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80" alt="Heritage sourdough tartine" class="w-full h-full object-cover">
-                <span class="absolute top-2.5 right-2.5 bg-[#d8deb7] border border-[#573d21] text-[#573d21] text-[11px] font-condensed font-bold px-2 py-0.5 uppercase">
-                  WOODFIRED
+                <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80" alt="Whipped ricotta tartine" class="w-full h-full object-cover">
+                <span class="absolute top-2.5 right-2.5 bg-[#d8deb7] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
+                  WOODTOASTED
                 </span>
               </div>
               <div class="p-5">
-                <div class="flex items-baseline justify-between gap-2 border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed text-lg font-bold text-[#573d21] uppercase tracking-wide">Whipped Ricotta & Fig Tartine</h3>
-                  <span class="font-serif-romie font-bold text-base text-[#573d21]">$12.50</span>
+                <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Whipped Ricotta & Valley Fig Tartine</h3>
+                  <span class="font-serif-romie font-bold text-sm text-[#573d21]">$12.50</span>
                 </div>
-                <div class="font-mono text-[11px] text-[#7c664d] uppercase mb-2">
-                  LOCAL FIGS • THYME HONEY • ROASTED PISTACHIO
-                </div>
+                <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">LOCAL FIGS • THYME HONEY • PISTACHIO</span>
                 <p class="font-serif-romie text-xs text-[#573d21]/80 leading-relaxed">
-                  Thick slice of 36-hour sourdough hearth bread, wood-toasted, with sheep milk ricotta, lavender wildflower honey.
+                  Thick cut 36-hour sourdough hearth loaf, wood-toasted with sheep milk ricotta and lavender wildflower honey.
                 </p>
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Whipped Ricotta & Fig Tartine', 12.50, 'Sourdough')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
+              <button onclick="addToCart('Whipped Ricotta & Valley Fig Tartine', 12.50, 'Sourdough')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
                 + ADD TO MORNING TRAY
               </button>
             </div>
           </div>
 
-          <!-- Item 5: Double-Baked Almond & Bitter Orange Croissant -->
-          <div class="menu-card bg-[#f3f3f3] border border-[#7c664d] flex flex-col justify-between" data-category="viennoiserie">
+          <!-- Item 5: Double Almond Croissant -->
+          <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="viennoiserie">
             <div>
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1549903072-7e6e0bedb7fb?auto=format&fit=crop&w=700&q=80" alt="Almond croissant" class="w-full h-full object-cover">
-                <span class="absolute top-2.5 right-2.5 bg-[#e3a36e] border border-[#573d21] text-[#573d21] text-[11px] font-condensed font-bold px-2 py-0.5 uppercase">
-                  LIMITED BATCH
+                <span class="absolute top-2.5 right-2.5 bg-[#e3a36e] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
+                  TWICE BAKED
                 </span>
               </div>
               <div class="p-5">
-                <div class="flex items-baseline justify-between gap-2 border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed text-lg font-bold text-[#573d21] uppercase tracking-wide">Twice-Baked Almond Frangipane</h3>
-                  <span class="font-serif-romie font-bold text-base text-[#573d21]">$6.50</span>
+                <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Twice-Baked Almond Frangipane</h3>
+                  <span class="font-serif-romie font-bold text-sm text-[#573d21]">$6.50</span>
                 </div>
-                <div class="font-mono text-[11px] text-[#7c664d] uppercase mb-2">
-                  MARCONA ALMONDS • SEVILLE ORANGE BLOSSOM • RUM SOAK
-                </div>
+                <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">MARCONA ALMONDS • ORANGE BLOSSOM</span>
                 <p class="font-serif-romie text-xs text-[#573d21]/80 leading-relaxed">
-                  Yesterday’s sourdough croissant re-soaked in orange blossom syrup, loaded with toasted almond cream and roasted flaked almonds.
+                  Sourdough croissant soaked in citrus blossom syrup, stuffed with roasted almond cream and toasted flakes.
                 </p>
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Twice-Baked Almond Frangipane', 6.50, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
+              <button onclick="addToCart('Twice-Baked Almond Frangipane', 6.50, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
                 + ADD TO MORNING TRAY
               </button>
             </div>
           </div>
 
-          <!-- Item 6: Autumn Spiced Pumpkin & Golden Honey Latte -->
-          <div class="menu-card bg-[#f3f3f3] border border-[#7c664d] flex flex-col justify-between" data-category="seasonal">
+          <!-- Item 6: Harvest Squash Latte -->
+          <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="seasonal">
             <div>
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
-                <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" alt="Seasonal spiced autumn coffee" class="w-full h-full object-cover">
-                <span class="absolute top-2.5 right-2.5 bg-[#efa164] border border-[#573d21] text-[#573d21] text-[11px] font-condensed font-bold px-2 py-0.5 uppercase">
+                <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" alt="Autumn latte" class="w-full h-full object-cover">
+                <span class="absolute top-2.5 right-2.5 bg-[#efa164] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
                   AUTUMN HARVEST
                 </span>
               </div>
               <div class="p-5">
-                <div class="flex items-baseline justify-between gap-2 border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed text-lg font-bold text-[#573d21] uppercase tracking-wide">Harvest Squash & Ceylon Cinnamon</h3>
-                  <span class="font-serif-romie font-bold text-base text-[#573d21]">$6.75</span>
+                <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Harvest Squash & Ceylon Cinnamon</h3>
+                  <span class="font-serif-romie font-bold text-sm text-[#573d21]">$6.75</span>
                 </div>
-                <div class="font-mono text-[11px] text-[#7c664d] uppercase mb-2">
-                  ROASTED KABOCHA • NUTMEG • MAPLE SYRUP • ESPRESSO
-                </div>
+                <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">ROASTED KABOCHA • NUTMEG • DARK MAPLE</span>
                 <p class="font-serif-romie text-xs text-[#573d21]/80 leading-relaxed">
-                  Real house-roasted kabocha squash puree reduced with raw spices and dark maple, paired with Colombian espresso.
+                  Real oven-roasted kabocha squash puree reduced with raw spices and dark maple, paired with Ethiopian espresso.
                 </p>
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Harvest Squash & Ceylon Cinnamon', 6.75, 'Seasonal')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
+              <button onclick="addToCart('Harvest Squash & Ceylon Cinnamon', 6.75, 'Seasonal')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
                 + ADD TO MORNING TRAY
               </button>
             </div>
@@ -609,84 +868,65 @@
 
         </div>
 
-        <!-- Whole Bean & Bread Bag Pre-order Strip -->
-        <div class="mt-12 p-6 md:p-8 bg-[#f3f3f3] border border-[#7c664d] flex flex-col md:flex-row items-center justify-between gap-6">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-[#e1c6ab] border border-[#573d21] flex items-center justify-center font-serif-romie font-bold text-xl text-[#573d21]">
-              🌾
-            </div>
-            <div>
-              <h4 class="font-serif-romie font-bold text-lg text-[#573d21]">Fresh Bags & Weekend Country Loaves</h4>
-              <p class="font-serif-romie text-xs text-[#573d21]/80">Take home 250g whole bean bags stamped with weekly roast dates, or pre-order whole Miche sourdough loaves.</p>
-            </div>
-          </div>
-          <a href="#reserve" class="btn-outlined-saddle px-6 py-3 text-xs md:text-sm whitespace-nowrap">
-            EXPLORE RETAIL BEANS & BREADS
-          </a>
-        </div>
-
       </div>
     </section>
 
-    <!-- 6. CURATED AMBIANCE GALLERY (Golden-hour atmosphere & slow living) -->
-    <section id="gallery" class="py-20 border-b border-[#7c664d] bg-[#f3f3f3]">
+    <!-- =========================================================================
+         7. CURATED AMBIANCE GALLERY (With Parallax & Lightbox)
+         ========================================================================= -->
+    <section id="gallery" class="py-20 border-b border-[#7c664d] bg-[#ece0d2]">
       <div class="max-w-[1200px] mx-auto px-4 md:px-8">
         
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <span class="text-xs font-condensed font-bold tracking-[0.12em] text-[#7c664d] uppercase block mb-1">Atmosphere & Space</span>
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif-romie font-normal text-[#573d21]">The Café at Golden Hour</h2>
+            <span class="font-condensed font-bold text-xs uppercase tracking-widest text-[#7c664d] block mb-1">Visual Archive</span>
+            <h2 class="font-serif-romie text-3xl sm:text-4xl md:text-5xl font-normal text-[#573d21]">The Ambiance at Golden Hour</h2>
           </div>
-          <p class="font-serif-romie text-sm text-[#573d21]/80 max-w-md">
-            Bathed in morning sunlight, scented with charred oak firewood and roasted jasmine coffee blossoms. A space designed to slow your pace.
+          <p class="font-serif-romie text-sm text-[#573d21]/80 max-w-sm">
+            Stone tables, morning sunbeams, and the fragrant crackle of the wood oven. Click any photo to expand.
           </p>
         </div>
 
-        <!-- Asymmetrical Gallery Grid with 1px borders & 0px radius -->
+        <!-- Asymmetrical Masonry Grid -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
           
-          <!-- Image 1: Main Barista Station (Large 7-col) -->
-          <div class="md:col-span-7 relative group cursor-pointer border border-[#7c664d] overflow-hidden" onclick="openLightbox('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80', 'The Roastery Hearth & Cast Iron Brew Bar — 8:15 AM')">
-            <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80" alt="Roastery coffee bar" class="w-full h-80 md:h-[420px] object-cover transition-transform duration-500 group-hover:scale-105">
-            <div class="absolute bottom-0 inset-x-0 bg-[#f3f3f3]/95 border-t border-[#7c664d] p-3 flex justify-between items-center text-xs font-condensed font-bold uppercase text-[#573d21]">
+          <div class="md:col-span-7 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80', 'The Cast Iron Roasting Hearth & Copper Brew Bar')">
+            <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80" alt="Coffee bar" class="w-full h-80 md:h-[420px] object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="p-3 bg-[#f3f3f3] border-t border-[#7c664d] flex justify-between text-xs font-condensed font-bold uppercase text-[#573d21]">
               <span>Cast Iron Brew Bar & Sourdough Cooling Rack</span>
-              <span class="text-[#7c664d]">08:15 AM</span>
+              <span class="font-mono text-[#7c664d]">08:15 AM</span>
             </div>
           </div>
 
-          <!-- Image 2: Sunlit Courtyard (5-col) -->
-          <div class="md:col-span-5 relative group cursor-pointer border border-[#7c664d] overflow-hidden" onclick="openLightbox('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80', 'The Sunlit Courtyard Patio under Wild Fig Branches')">
-            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80" alt="Courtyard patio" class="w-full h-80 md:h-[420px] object-cover transition-transform duration-500 group-hover:scale-105">
-            <div class="absolute bottom-0 inset-x-0 bg-[#f3f3f3]/95 border-t border-[#7c664d] p-3 flex justify-between items-center text-xs font-condensed font-bold uppercase text-[#573d21]">
+          <div class="md:col-span-5 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80', 'The Sunlit Courtyard Patio under Fig Leaves')">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80" alt="Courtyard patio" class="w-full h-80 md:h-[420px] object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="p-3 bg-[#f3f3f3] border-t border-[#7c664d] flex justify-between text-xs font-condensed font-bold uppercase text-[#573d21]">
               <span>Courtyard Terrace & Stone Benches</span>
-              <span class="text-[#7c664d]">09:30 AM</span>
+              <span class="font-mono text-[#7c664d]">09:30 AM</span>
             </div>
           </div>
 
-          <!-- Image 3: Flour Dusting & Sourdough Scoring (4-col) -->
-          <div class="md:col-span-4 relative group cursor-pointer border border-[#7c664d] overflow-hidden" onclick="openLightbox('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80', 'Bakehouse Kneading Table — Sourdough Scoring at Dawn')">
-            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80" alt="Baking bread table" class="w-full h-64 md:h-72 object-cover transition-transform duration-500 group-hover:scale-105">
-            <div class="absolute bottom-0 inset-x-0 bg-[#f3f3f3]/95 border-t border-[#7c664d] p-2.5 flex justify-between items-center text-[11px] font-condensed font-bold uppercase text-[#573d21]">
+          <div class="md:col-span-4 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80', 'Dawn Kneading & Sourdough Scoring Table')">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80" alt="Baking table" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="p-2.5 bg-[#f3f3f3] border-t border-[#7c664d] flex justify-between text-[11px] font-condensed font-bold uppercase text-[#573d21]">
               <span>Morning Flour Dusting</span>
-              <span class="text-[#7c664d]">05:45 AM</span>
+              <span class="font-mono text-[#7c664d]">05:45 AM</span>
             </div>
           </div>
 
-          <!-- Image 4: Hand-turned Ceramics (4-col) -->
-          <div class="md:col-span-4 relative group cursor-pointer border border-[#7c664d] overflow-hidden" onclick="openLightbox('https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=1000&q=80', 'Custom Wheel-thrown Terracotta & Ash Glazed Cups')">
-            <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=1000&q=80" alt="Ceramic cup on wooden table" class="w-full h-64 md:h-72 object-cover transition-transform duration-500 group-hover:scale-105">
-            <div class="absolute bottom-0 inset-x-0 bg-[#f3f3f3]/95 border-t border-[#7c664d] p-2.5 flex justify-between items-center text-[11px] font-condensed font-bold uppercase text-[#573d21]">
-              <span>Handmade Local Stoneware</span>
-              <span class="text-[#7c664d]">10:15 AM</span>
+          <div class="md:col-span-4 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=1000&q=80', 'Wheel-thrown Local Stoneware Cups')">
+            <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=1000&q=80" alt="Ceramic cup" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="p-2.5 bg-[#f3f3f3] border-t border-[#7c664d] flex justify-between text-[11px] font-condensed font-bold uppercase text-[#573d21]">
+              <span>Terracotta Glazed Ceramics</span>
+              <span class="font-mono text-[#7c664d]">10:15 AM</span>
             </div>
           </div>
 
-          <!-- Image 5: Reading Corner / Nook (4-col) -->
-          <div class="md:col-span-4 relative group cursor-pointer border border-[#7c664d] overflow-hidden" onclick="openLightbox('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80', 'The Library & Siphon Coffee Tasting Nook')">
-            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80" alt="Coffee cup and reading book" class="w-full h-64 md:h-72 object-cover transition-transform duration-500 group-hover:scale-105">
-            <div class="absolute bottom-0 inset-x-0 bg-[#f3f3f3]/95 border-t border-[#7c664d] p-2.5 flex justify-between items-center text-[11px] font-condensed font-bold uppercase text-[#573d21]">
+          <div class="md:col-span-4 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80', 'The Library Nook & Pour-Over Tasting Corner')">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80" alt="Reading nook" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="p-2.5 bg-[#f3f3f3] border-t border-[#7c664d] flex justify-between text-[11px] font-condensed font-bold uppercase text-[#573d21]">
               <span>The Quiet Library Nook</span>
-              <span class="text-[#7c664d]">11:00 AM</span>
+              <span class="font-mono text-[#7c664d]">11:00 AM</span>
             </div>
           </div>
 
@@ -695,204 +935,157 @@
       </div>
     </section>
 
-    <!-- 7. TABLE RESERVATIONS SECTION (Clean, Intuitive 3-Step Flow) -->
-    <section id="reserve" class="py-20 border-b border-[#7c664d] bg-[#ece0d2]">
+    <!-- =========================================================================
+         8. TABLE RESERVATIONS (Clean, Intuitive 4-Step Booking Widget)
+         ========================================================================= -->
+    <section id="reserve" class="py-20 border-b border-[#7c664d] bg-[#f3f3f3]">
       <div class="max-w-[1200px] mx-auto px-4 md:px-8">
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
           
-          <!-- Left Column: Reservation Intro & Guidelines -->
+          <!-- Left Column: Reservation Info & Atmospheres -->
           <div class="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <span class="text-xs font-condensed font-bold tracking-[0.12em] text-[#7c664d] uppercase block mb-1">Hospitality & Seating</span>
-              <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif-romie font-normal text-[#573d21] leading-tight mb-4">
-                Reserve Your Table
+              <span class="font-condensed font-bold text-xs uppercase tracking-widest text-[#7c664d] block mb-1">Hospitality</span>
+              <h2 class="font-serif-romie text-3xl sm:text-4xl md:text-5xl font-normal text-[#573d21] mb-4">
+                Reserve Your Morning Table
               </h2>
-              <p class="font-serif-romie text-sm md:text-base text-[#573d21]/85 leading-relaxed mb-6">
-                Whether an intimate morning espresso and sourdough pairing, or a lazy weekend brunch with vineyard views, we reserve half of our tables while keeping the other half for walk-ins.
+              <p class="font-serif-romie text-sm text-[#573d21]/85 leading-relaxed mb-6">
+                Half of our tables are reserved in advance for unhurried breakfasts and coffee flights; the other half are always held open for spontaneous walk-ins.
               </p>
 
-              <!-- Seating Areas Breakdown Cards -->
               <div class="space-y-3 font-condensed uppercase text-xs">
-                <div class="p-3.5 bg-[#f3f3f3] border border-[#7c664d]">
+                <div class="p-3.5 bg-[#ece0d2] border border-[#7c664d]">
                   <div class="flex justify-between font-bold text-[#573d21] mb-1">
-                    <span>A • The Sunlit Courtyard Terrace</span>
-                    <span class="text-[#7c664d]">Outdoor Patio</span>
+                    <span>A • The Sunlit Courtyard Patio</span>
+                    <span class="text-[#7c664d]">Outdoor / Heated</span>
                   </div>
-                  <p class="font-serif-romie normal-case text-xs text-[#573d21]/75">Under olive trees and morning sun. Heated in autumn and blanket-equipped.</p>
+                  <p class="font-serif-romie normal-case text-xs text-[#573d21]/75">Under wild fig branches with morning vineyard breezes.</p>
                 </div>
 
-                <div class="p-3.5 bg-[#f3f3f3] border border-[#7c664d]">
+                <div class="p-3.5 bg-[#ece0d2] border border-[#7c664d]">
                   <div class="flex justify-between font-bold text-[#573d21] mb-1">
-                    <span>B • Hearth & Fireplace Room</span>
-                    <span class="text-[#7c664d]">Indoor Cosy</span>
+                    <span>B • The Woodfired Hearth Room</span>
+                    <span class="text-[#7c664d]">Cosy Indoor</span>
                   </div>
-                  <p class="font-serif-romie normal-case text-xs text-[#573d21]/75">Close to the baking oven aromas, timber tables, and low acoustic hum.</p>
+                  <p class="font-serif-romie normal-case text-xs text-[#573d21]/75">Close to the baking oven warmth, timber tables, and soft acoustic hum.</p>
                 </div>
 
-                <div class="p-3.5 bg-[#f3f3f3] border border-[#7c664d]">
+                <div class="p-3.5 bg-[#ece0d2] border border-[#7c664d]">
                   <div class="flex justify-between font-bold text-[#573d21] mb-1">
                     <span>C • The Barista Tasting Counter</span>
-                    <span class="text-[#7c664d]">Chef's Experience</span>
+                    <span class="text-[#7c664d]">Front Row</span>
                   </div>
-                  <p class="font-serif-romie normal-case text-xs text-[#573d21]/75">Front row bar stools facing the pour-over brew bar and espresso machines.</p>
+                  <p class="font-serif-romie normal-case text-xs text-[#573d21]/75">Front row bar stools facing the pour-over brew bar.</p>
                 </div>
               </div>
             </div>
 
-            <!-- Walk-in info badge -->
             <div class="mt-6 p-4 bg-[#d8deb7] border border-[#7c664d] text-xs font-condensed tracking-wide text-[#573d21] uppercase">
-              <strong class="font-bold block mb-1">Walk-In Note:</strong>
-              Bar stools and front terrace tables are always open for spontaneous coffee & pastry grab-and-sit.
+              <strong class="font-bold block mb-0.5">Note on Walk-Ins:</strong>
+              Espresso bar stools and terrace benches are always open without booking.
             </div>
           </div>
 
-          <!-- Right Column: Interactive Booking Form (0px radius, 1px saddle borders) -->
-          <div class="lg:col-span-7 bg-[#f3f3f3] border border-[#7c664d] p-6 sm:p-8">
-            
-            <div class="border-b border-[#7c664d] pb-4 mb-6 flex justify-between items-baseline">
+          <!-- Right Column: Booking Form -->
+          <div class="lg:col-span-7 bg-[#ece0d2] border border-[#7c664d] p-6 sm:p-8">
+            <div class="border-b border-[#7c664d] pb-3 mb-6 flex justify-between items-baseline">
               <h3 class="font-condensed text-xl font-bold uppercase tracking-wider text-[#573d21]">Table Booking Request</h3>
               <span class="font-mono text-xs text-[#7c664d]">INSTANT CONFIRMATION</span>
             </div>
 
-            <form id="reservationForm" onsubmit="handleReservationSubmit(event)" class="space-y-6">
+            <form id="reservationForm" onsubmit="handleReservationSubmit(event)" class="space-y-5">
               
-              <!-- Step 1: Party Size Selection (Buttons) -->
+              <!-- Step 1: Party Size -->
               <div>
                 <label class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-2">
                   1. Party Size (Guests)
                 </label>
                 <div class="grid grid-cols-5 gap-2" id="partySizeSelector">
-                  <button type="button" onclick="selectPartySize(1)" class="party-btn py-2.5 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">1</button>
-                  <button type="button" onclick="selectPartySize(2)" class="party-btn py-2.5 text-center text-sm font-condensed font-bold border border-[#573d21] bg-[#573d21] text-[#f3f3f3]">2</button>
-                  <button type="button" onclick="selectPartySize(3)" class="party-btn py-2.5 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">3</button>
-                  <button type="button" onclick="selectPartySize(4)" class="party-btn py-2.5 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">4</button>
-                  <button type="button" onclick="selectPartySize(6)" class="party-btn py-2.5 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">6+</button>
+                  <button type="button" onclick="selectPartySize(1)" class="party-btn py-2 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">1</button>
+                  <button type="button" onclick="selectPartySize(2)" class="party-btn py-2 text-center text-sm font-condensed font-bold border border-[#573d21] bg-[#573d21] text-[#f3f3f3]">2</button>
+                  <button type="button" onclick="selectPartySize(3)" class="party-btn py-2 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">3</button>
+                  <button type="button" onclick="selectPartySize(4)" class="party-btn py-2 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">4</button>
+                  <button type="button" onclick="selectPartySize(6)" class="party-btn py-2 text-center text-sm font-condensed font-bold border border-[#7c664d] bg-[#f3f3f3] text-[#573d21] hover:bg-[#e1c6ab]">6+</button>
                 </div>
                 <input type="hidden" id="selectedParty" value="2">
               </div>
 
-              <!-- Step 2: Date & Seating Time Slot -->
+              <!-- Step 2: Date & Time -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label for="resDate" class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-2">
-                    2. Select Date
+                  <label for="resDate" class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-1.5">
+                    2. Date
                   </label>
-                  <input type="date" id="resDate" required class="w-full p-2.5 text-sm font-serif-romie bg-[#ece0d2] border border-[#7c664d] text-[#573d21] focus:outline-none focus:border-[#573d21]">
+                  <input type="date" id="resDate" required class="w-full p-2.5 text-sm font-serif-romie bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] focus:outline-none">
                 </div>
                 <div>
-                  <label for="resTime" class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-2">
-                    3. Time Slot
+                  <label for="resTime" class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-1.5">
+                    3. Seating Time
                   </label>
-                  <select id="resTime" required class="w-full p-2.5 text-sm font-condensed font-bold uppercase bg-[#ece0d2] border border-[#7c664d] text-[#573d21] focus:outline-none focus:border-[#573d21]">
-                    <option value="08:00 AM">08:00 AM (Early Baker's Hour)</option>
-                    <option value="09:00 AM" selected>09:00 AM (Morning Golden Light)</option>
-                    <option value="10:30 AM">10:30 AM (Brunch & Slow Pour)</option>
+                  <select id="resTime" required class="w-full p-2.5 text-sm font-condensed font-bold uppercase bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] focus:outline-none">
+                    <option value="08:00 AM">08:00 AM (Baker's Dawn)</option>
+                    <option value="09:00 AM" selected>09:00 AM (Golden Light Service)</option>
+                    <option value="10:30 AM">10:30 AM (Brunch & Pour Over)</option>
                     <option value="12:00 PM">12:00 PM (Noon Tartine Lunch)</option>
-                    <option value="01:30 PM">01:30 PM (Afternoon Coffee & Knot)</option>
+                    <option value="01:30 PM">01:30 PM (Afternoon Knot & Coffee)</option>
                     <option value="03:00 PM">03:00 PM (Sunset Tasting Flight)</option>
                   </select>
                 </div>
               </div>
 
-              <!-- Step 3: Seating Preference Selector -->
+              <!-- Step 3: Atmosphere Preference -->
               <div>
-                <label class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-2">
-                  4. Preferred Atmosphere
+                <label class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-1.5">
+                  4. Atmosphere Preference
                 </label>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="seatingSelector">
-                  <label class="border border-[#7c664d] p-3 cursor-pointer bg-[#ece0d2] hover:bg-[#e1c6ab] flex flex-col justify-between">
-                    <input type="radio" name="seating" value="Sunlit Patio" checked class="accent-[#573d21] mb-2">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <label class="border border-[#7c664d] p-2.5 cursor-pointer bg-[#f3f3f3] hover:bg-[#e1c6ab] flex flex-col justify-between">
+                    <input type="radio" name="seating" value="Sunlit Patio" checked class="accent-[#573d21] mb-1">
                     <span class="font-condensed font-bold text-xs uppercase text-[#573d21]">Sunlit Patio</span>
-                    <span class="text-[10px] text-[#7c664d] font-mono">Outdoor / Garden</span>
+                    <span class="text-[9px] text-[#7c664d] font-mono">Garden Breeze</span>
                   </label>
-                  <label class="border border-[#7c664d] p-3 cursor-pointer bg-[#ece0d2] hover:bg-[#e1c6ab] flex flex-col justify-between">
-                    <input type="radio" name="seating" value="Hearth & Fireplace" class="accent-[#573d21] mb-2">
+                  <label class="border border-[#7c664d] p-2.5 cursor-pointer bg-[#f3f3f3] hover:bg-[#e1c6ab] flex flex-col justify-between">
+                    <input type="radio" name="seating" value="Hearth Room" class="accent-[#573d21] mb-1">
                     <span class="font-condensed font-bold text-xs uppercase text-[#573d21]">Hearth Room</span>
-                    <span class="text-[10px] text-[#7c664d] font-mono">Warm & Acoustic</span>
+                    <span class="text-[9px] text-[#7c664d] font-mono">Wood Oven Warmth</span>
                   </label>
-                  <label class="border border-[#7c664d] p-3 cursor-pointer bg-[#ece0d2] hover:bg-[#e1c6ab] flex flex-col justify-between">
-                    <input type="radio" name="seating" value="Barista Counter" class="accent-[#573d21] mb-2">
+                  <label class="border border-[#7c664d] p-2.5 cursor-pointer bg-[#f3f3f3] hover:bg-[#e1c6ab] flex flex-col justify-between">
+                    <input type="radio" name="seating" value="Barista Counter" class="accent-[#573d21] mb-1">
                     <span class="font-condensed font-bold text-xs uppercase text-[#573d21]">Barista Counter</span>
-                    <span class="text-[10px] text-[#7c664d] font-mono">Front-Row Brew</span>
+                    <span class="text-[9px] text-[#7c664d] font-mono">Front-Row Brew</span>
                   </label>
                 </div>
               </div>
 
-              <!-- Step 4: Guest Details -->
+              <!-- Step 4: Contact -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="guestName" class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-1">
-                    Your Full Name
+                    Full Name
                   </label>
-                  <input type="text" id="guestName" placeholder="e.g. Eleanor Vance" required class="w-full p-2.5 text-sm bg-[#ece0d2] border border-[#7c664d] text-[#573d21] focus:outline-none focus:border-[#573d21]">
+                  <input type="text" id="guestName" placeholder="Eleanor Vance" required class="w-full p-2.5 text-sm bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] focus:outline-none">
                 </div>
                 <div>
                   <label for="guestContact" class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-1">
-                    Mobile or Email
+                    Email / Mobile
                   </label>
-                  <input type="text" id="guestContact" placeholder="eleanor@domain.com" required class="w-full p-2.5 text-sm bg-[#ece0d2] border border-[#7c664d] text-[#573d21] focus:outline-none focus:border-[#573d21]">
+                  <input type="text" id="guestContact" placeholder="eleanor@domain.com" required class="w-full p-2.5 text-sm bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] focus:outline-none">
                 </div>
               </div>
 
-              <!-- Notes / Special Diet -->
+              <!-- Notes -->
               <div>
                 <label for="guestNotes" class="block text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] mb-1">
-                  Special Notes / Dietary Requirements (Optional)
+                  Special Notes / Dietary (Optional)
                 </label>
-                <textarea id="guestNotes" rows="2" placeholder="e.g. Anniversary celebration, wheelchair accessibility, oat milk preference..." class="w-full p-2.5 text-sm bg-[#ece0d2] border border-[#7c664d] text-[#573d21] focus:outline-none focus:border-[#573d21]"></textarea>
+                <input type="text" id="guestNotes" placeholder="e.g. Birthday morning, vegan pastry preferences..." class="w-full p-2.5 text-sm bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] focus:outline-none">
               </div>
 
-              <!-- Submit Button -->
-              <button type="submit" class="w-full btn-terracotta py-3.5 text-sm font-condensed font-bold uppercase tracking-widest text-[#573d21] border border-[#573d21]">
-                CONFIRM TABLE RESERVATION
+              <button type="submit" class="w-full btn-terracotta py-3.5 text-xs font-condensed font-bold uppercase tracking-widest text-[#573d21] border border-[#573d21]">
+                CONFIRM TABLE RESERVATION →
               </button>
-
             </form>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 8. LOCATION, HOURS & VISITING DETAILS -->
-    <section id="visiting" class="py-16 border-b border-[#7c664d] bg-[#f3f3f3]">
-      <div class="max-w-[1200px] mx-auto px-4 md:px-8">
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 border border-[#7c664d] bg-[#ece0d2]">
-          
-          <div class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#7c664d]">
-            <span class="font-mono text-xs text-[#7c664d] uppercase block mb-1">01 / LOCATION</span>
-            <h4 class="font-serif-romie font-bold text-xl text-[#573d21] mb-2">The Bakehouse & Roastery</h4>
-            <p class="font-serif-romie text-sm text-[#573d21]/80 leading-relaxed mb-4">
-              440 Vineyard Ridge Road<br>
-              Sonoma Valley Footprints, CA 95476
-            </p>
-            <span class="inline-block text-xs font-condensed font-bold uppercase text-[#573d21] underline cursor-pointer">
-              Open in Apple / Google Maps →
-            </span>
-          </div>
-
-          <div class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#7c664d]">
-            <span class="font-mono text-xs text-[#7c664d] uppercase block mb-1">02 / ROASTING & BAKING HOURS</span>
-            <h4 class="font-serif-romie font-bold text-xl text-[#573d21] mb-2">Daily Service</h4>
-            <ul class="font-condensed uppercase text-xs space-y-1.5 text-[#573d21]">
-              <li class="flex justify-between"><span>Monday – Thursday:</span> <strong class="font-bold">07:00 AM – 04:00 PM</strong></li>
-              <li class="flex justify-between"><span>Friday – Saturday:</span> <strong class="font-bold">07:00 AM – 06:00 PM</strong></li>
-              <li class="flex justify-between"><span>Sunday Harvest Brunch:</span> <strong class="font-bold">08:00 AM – 05:00 PM</strong></li>
-            </ul>
-          </div>
-
-          <div class="p-6 md:p-8">
-            <span class="font-mono text-xs text-[#7c664d] uppercase block mb-1">03 / PRIVATE TASTINGS</span>
-            <h4 class="font-serif-romie font-bold text-xl text-[#573d21] mb-2">Cupping & Sourdough Workshops</h4>
-            <p class="font-serif-romie text-sm text-[#573d21]/80 leading-relaxed mb-4">
-              Join head roaster & master baker for Saturday morning sensory cuppings and fermentation masterclasses.
-            </p>
-            <a href="#reserve" class="inline-block text-xs font-condensed font-bold uppercase text-[#573d21] underline">
-              Inquire for Group Cuppings →
-            </a>
           </div>
 
         </div>
@@ -902,137 +1095,131 @@
 
   </main>
 
-  <!-- 9. FOOTER (Vintage Cream surface, Walnut Ink typography) -->
+  <!-- =========================================================================
+       9. FOOTER (Vintage Cream surface, Walnut Ink typography)
+       ========================================================================= -->
   <footer class="bg-[#ece0d2] text-[#573d21] border-t border-[#7c664d] py-14">
     <div class="max-w-[1200px] mx-auto px-4 md:px-8">
       
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#7c664d]">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-[#7c664d]">
         
-        <!-- Brand Info -->
         <div class="md:col-span-5">
-          <h3 class="font-serif-romie text-2xl font-bold text-[#573d21] mb-2">VALLEY GRAIN & ROAST</h3>
-          <p class="font-serif-romie text-sm text-[#573d21]/85 max-w-sm leading-relaxed mb-4">
-            An artisanal specialty coffee house and woodfired sourdough bakery grounded in the slow agricultural rhythms of the valley.
+          <h3 class="font-serif-romie text-2xl font-bold text-[#573d21] mb-1">VALLEY GRAIN & ROAST</h3>
+          <p class="font-serif-romie italic text-xs text-[#7c664d] mb-3">minimal intervention specialty coffee & heritage bakery.</p>
+          <p class="font-serif-romie text-xs text-[#573d21]/80 max-w-sm leading-relaxed mb-4">
+            Roasted in small batches on vintage cast-iron drums. 72-hour sourdough viennoiserie pulled hourly from our woodfired hearth.
           </p>
-          <div class="flex gap-4 font-condensed text-xs font-bold uppercase tracking-wider text-[#573d21]">
-            <a href="#" class="hover:text-[#a35438]">INSTAGRAM</a>
+          <div class="flex gap-3 font-condensed text-xs font-bold uppercase tracking-wider text-[#573d21]">
+            <a href="#" class="hover:text-[#a85032]">INSTAGRAM</a>
             <span>•</span>
-            <a href="#" class="hover:text-[#a35438]">SUBSTACK JOURNAL</a>
+            <a href="#" class="hover:text-[#a85032]">SUBSTACK JOURNAL</a>
             <span>•</span>
-            <a href="#" class="hover:text-[#a35438]">SPOTIFY PLAYLIST</a>
+            <a href="#" class="hover:text-[#a85032]">SPOTIFY TASTING ROOM</a>
           </div>
         </div>
 
-        <!-- Quick Links -->
         <div class="md:col-span-3">
-          <h4 class="font-condensed font-bold text-xs uppercase tracking-widest text-[#7c664d] mb-3">Navigation</h4>
-          <ul class="font-condensed text-sm space-y-1.5 font-bold uppercase text-[#573d21]">
-            <li><a href="#menu" class="hover:text-[#e3a36e]">Our Signature Bakes</a></li>
-            <li><a href="#story" class="hover:text-[#e3a36e]">Direct Sourcing & Levain</a></li>
-            <li><a href="#gallery" class="hover:text-[#e3a36e]">Café Interior & Patio</a></li>
-            <li><a href="#reserve" class="hover:text-[#e3a36e]">Online Table Booking</a></li>
-            <li><a href="#visiting" class="hover:text-[#e3a36e]">Wholesale Coffee Beans</a></li>
+          <h4 class="font-condensed font-bold text-xs uppercase tracking-widest text-[#7c664d] mb-3">Directory</h4>
+          <ul class="font-condensed text-xs space-y-1.5 font-bold uppercase text-[#573d21]">
+            <li><a href="#heroIllustration" class="hover:text-[#e3a36e]">Home & Harvest</a></li>
+            <li><a href="#threePack" class="hover:text-[#e3a36e]">The 3-Pack</a></li>
+            <li><a href="#aboutSection" class="hover:text-[#e3a36e]">About Our Craft</a></li>
+            <li><a href="#menu" class="hover:text-[#e3a36e]">Menu & Tasting Notes</a></li>
+            <li><a href="#reserve" class="hover:text-[#e3a36e]">Table Reservations</a></li>
           </ul>
         </div>
 
-        <!-- Newsletter / Brew Notes -->
         <div class="md:col-span-4">
-          <h4 class="font-condensed font-bold text-xs uppercase tracking-widest text-[#7c664d] mb-3">The Weekly Brew Notes</h4>
+          <h4 class="font-condensed font-bold text-xs uppercase tracking-widest text-[#7c664d] mb-2">The Weekly Brew Notes</h4>
           <p class="font-serif-romie text-xs text-[#573d21]/80 mb-3">
-            Subscribe for limited batch roast alerts, seasonal pastry announcements, and sourdough recipes.
+            Subscribe for limited batch roast drops, cupping invites, and sourdough recipes.
           </p>
-          <form onsubmit="handleNewsletter(event)" class="flex flex-col sm:flex-row gap-2">
-            <input type="email" id="newsletterEmail" placeholder="your@email.com" required class="flex-grow p-2.5 text-xs bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] focus:outline-none">
-            <button type="submit" class="btn-peach-sand px-4 py-2.5 text-xs whitespace-nowrap">JOIN NOTES</button>
+          <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+            <input type="email" id="newsletterEmail" placeholder="your@email.com" required class="flex-grow p-2 text-xs bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] focus:outline-none">
+            <button type="submit" class="btn-peach-sand px-4 py-2 text-xs font-condensed font-bold uppercase">JOIN</button>
           </form>
-          <div id="newsletterSuccess" class="hidden text-xs font-condensed font-bold text-[#573d21] mt-2">
-            ✓ Welcome to our weekly roast journal.
-          </div>
+          <span id="newsletterNotice" class="hidden text-[11px] font-condensed font-bold text-[#573d21] mt-1.5 block">
+            ✓ Subscribed to our weekly harvest notes.
+          </span>
         </div>
 
       </div>
 
-      <!-- Copyright & Colophon -->
       <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-xs font-condensed uppercase tracking-wider text-[#7c664d]">
         <div>
-          © 2026 VALLEY GRAIN & ROAST LLC. ALL RIGHTS RESERVED.
+          © 2026 VALLEY GRAIN & ROAST LLC • ALL RIGHTS RESERVED.
         </div>
-        <div class="mt-2 sm:mt-0 font-mono text-[11px]">
-          STYLE SPEC: FALLEN GRAPE SYSTEM • 0PX RADIUS • ZERO ELEVATION
+        <div class="mt-2 sm:mt-0 font-mono text-[10px]">
+          FALLEN GRAPE STYLE SPECIFICATION • STRICT 0PX RADIUS • ZERO ELEVATION
         </div>
       </div>
 
     </div>
   </footer>
 
-  <!-- 10. INTERACTIVE ORDER TRAY SLIDE-OVER DRAWER -->
+  <!-- =========================================================================
+       10. INTERACTIVE ORDER TRAY SLIDE-OVER DRAWER
+       ========================================================================= -->
   <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
-    <!-- Backdrop -->
-    <div id="cartBackdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-[#573d21]/40 backdrop-blur-sm pointer-events-auto"></div>
+    <div id="cartBackdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-[#573d21]/45 backdrop-blur-sm pointer-events-auto"></div>
     
-    <!-- Drawer Panel -->
     <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#f3f3f3] border-l border-[#7c664d] p-6 flex flex-col justify-between pointer-events-auto shadow-none">
       <div>
-        <div class="flex items-center justify-between border-b border-[#7c664d] pb-4 mb-4">
+        <div class="flex items-center justify-between border-b border-[#7c664d] pb-3 mb-4">
           <div>
             <h3 class="font-condensed text-xl font-bold uppercase text-[#573d21]">Your Morning Tray</h3>
-            <span class="text-xs font-mono text-[#7c664d]">FOR PICKUP OR DINE-IN PAIRING</span>
+            <span class="text-xs font-mono text-[#7c664d]">FOR DINE-IN PAIRING OR PICKUP</span>
           </div>
           <button onclick="toggleCartDrawer()" class="p-1 border border-[#7c664d] hover:bg-[#e1c6ab] text-[#573d21]">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="square" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
+            ✕
           </button>
         </div>
 
-        <!-- Cart Items List -->
         <div id="cartItemsContainer" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
-          <!-- Dynamic Items inserted here -->
           <div id="emptyCartNotice" class="py-12 text-center">
             <span class="text-3xl block mb-2">☕</span>
             <p class="font-serif-romie text-sm text-[#573d21]">Your tray is currently empty.</p>
-            <p class="font-condensed text-xs text-[#7c664d] uppercase mt-1">Select from our signature menu & viennoiserie.</p>
+            <p class="font-condensed text-xs text-[#7c664d] uppercase mt-1">Select from our signature roasts & 3-pack bakes.</p>
           </div>
         </div>
       </div>
 
-      <!-- Drawer Bottom Summary -->
       <div class="border-t border-[#7c664d] pt-4 mt-4">
         <div class="flex justify-between font-serif-romie text-base font-bold text-[#573d21] mb-2">
           <span>Estimated Total</span>
           <span id="cartTotalPrice">$0.00</span>
         </div>
-        <p class="font-condensed text-[11px] text-[#7c664d] uppercase mb-4">Tax calculated at barista counter. Ready in ~15 mins.</p>
         <button onclick="checkoutTray()" id="checkoutBtn" disabled class="w-full btn-terracotta py-3 text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21] disabled:opacity-40 disabled:cursor-not-allowed">
-          COMPLETE TRAY ORDER
+          PLACE MORNING PRE-ORDER →
         </button>
       </div>
     </div>
   </div>
 
-  <!-- 11. CONFIRMATION MODAL (For Table Reservations) -->
+  <!-- =========================================================================
+       11. CONFIRMATION TICKET MODAL
+       ========================================================================= -->
   <div id="confirmationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
     <div class="bg-[#f3f3f3] border-2 border-[#573d21] p-6 sm:p-8 max-w-lg w-full relative">
       <div class="text-center">
-        <div class="w-12 h-12 bg-[#d8deb7] border border-[#573d21] mx-auto flex items-center justify-center mb-4">
+        <div class="w-12 h-12 bg-[#d8deb7] border border-[#573d21] mx-auto flex items-center justify-center mb-3">
           <svg class="w-6 h-6 text-[#573d21]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="square" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
         <span class="text-xs font-mono text-[#7c664d] uppercase block">RESERVATION CONFIRMED</span>
         <h3 class="font-serif-romie text-2xl sm:text-3xl font-bold text-[#573d21] mt-1 mb-2">We Look Forward to Welcoming You</h3>
-        <p class="font-serif-romie text-sm text-[#573d21]/80 mb-6" id="confirmDetails">
-          Your table has been reserved. A confirmation note has been dispatched.
+        <p class="font-serif-romie text-xs text-[#573d21]/80 mb-6">
+          Your table has been recorded in our hearth ledger.
         </p>
 
-        <!-- Ticket Card -->
         <div class="p-4 bg-[#ece0d2] border border-[#7c664d] text-left mb-6 font-condensed text-xs uppercase space-y-1.5 text-[#573d21]">
           <div class="flex justify-between border-b border-[#7c664d]/30 pb-1">
             <span>Guest Name:</span>
             <strong id="ticketName" class="font-bold">-</strong>
           </div>
           <div class="flex justify-between border-b border-[#7c664d]/30 pb-1">
-            <span>Party Size & Atmosphere:</span>
+            <span>Party & Atmosphere:</span>
             <strong id="ticketParty" class="font-bold">-</strong>
           </div>
           <div class="flex justify-between">
@@ -1048,23 +1235,122 @@
     </div>
   </div>
 
-  <!-- 12. LIGHTBOX MODAL (For Curated Gallery Photos) -->
+  <!-- =========================================================================
+       12. LIGHTBOX MODAL
+       ========================================================================= -->
   <div id="lightboxModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop" onclick="closeLightbox()">
     <div class="relative max-w-4xl w-full bg-[#f3f3f3] border-2 border-[#573d21] p-3" onclick="event.stopPropagation()">
       <button onclick="closeLightbox()" class="absolute top-4 right-4 z-10 p-2 bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] hover:bg-[#e1c6ab]">
         ✕
       </button>
       <img id="lightboxImg" src="" alt="Gallery Preview" class="w-full max-h-[75vh] object-cover border border-[#7c664d]">
-      <div class="p-4 bg-[#ece0d2] border border-[#7c664d] mt-3 flex justify-between items-center">
+      <div class="p-3 bg-[#ece0d2] border border-[#7c664d] mt-2 flex justify-between items-center">
         <p id="lightboxCaption" class="font-serif-romie text-sm text-[#573d21] font-bold"></p>
-        <span class="font-mono text-xs text-[#7c664d] uppercase">Valley Grain & Roast Gallery</span>
+        <span class="font-mono text-xs text-[#7c664d] uppercase">Valley Grain & Roast</span>
       </div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- =========================================================================
+       13. SCRIPT: GSAP SCROLLTRIGGER ANIMATIONS & INTERACTIVE SYSTEMS
+       ========================================================================= -->
   <script>
-    // Set default date picker to tomorrow
+    // 1. Lethal Preloader Curtain Animation
+    window.addEventListener("load", () => {
+      const bar = document.getElementById("loaderBar");
+      bar.style.width = "100%";
+      setTimeout(() => {
+        const preloader = document.getElementById("preloader");
+        preloader.classList.add("curtain-open");
+        initScrollAnimations();
+      }, 700);
+    });
+
+    // 2. Scroll Progress Bar
+    window.addEventListener("scroll", () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("scrollProgress").style.width = scrolled + "%";
+    });
+
+    // 3. GSAP ScrollTrigger Animations
+    function initScrollAnimations() {
+      if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero Parallax on Hill Layers
+      gsap.to("#hillBack", {
+        y: 60,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#heroIllustration",
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+      gsap.to("#hillMid", {
+        y: 90,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#heroIllustration",
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+      gsap.to("#hillFront", {
+        y: 120,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#heroIllustration",
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+
+      // Staggered Reveal for The 3-Pack cards
+      gsap.from("#threePack .bg-\\[\\#f3f3f3\\]", {
+        scrollTrigger: {
+          trigger: "#threePack",
+          start: "top 75%",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power2.out"
+      });
+
+      // About Section Subtle Zoom & Slide Reveal
+      gsap.from("#aboutSection img, #aboutSection svg", {
+        scrollTrigger: {
+          trigger: "#aboutSection",
+          start: "top 70%",
+        },
+        scale: 0.95,
+        opacity: 0.8,
+        duration: 1,
+        ease: "power2.out"
+      });
+
+      // Menu Items Stagger
+      gsap.from(".menu-item", {
+        scrollTrigger: {
+          trigger: "#menuCardsGrid",
+          start: "top 80%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: "power2.out"
+      });
+    }
+
+    // Default Date Picker setup
     document.addEventListener("DOMContentLoaded", () => {
       const dateInput = document.getElementById("resDate");
       if (dateInput) {
@@ -1081,7 +1367,7 @@
     }
     document.getElementById("mobileMenuBtn")?.addEventListener("click", toggleMobileMenu);
 
-    // Menu Category Filtering
+    // Menu Filtering
     function filterMenu(category) {
       const buttons = document.querySelectorAll(".menu-tab-btn");
       buttons.forEach(btn => {
@@ -1089,16 +1375,17 @@
         btn.classList.add("bg-[#f3f3f3]", "text-[#573d21]");
       });
 
-      // Highlight active button
-      event.target.classList.remove("bg-[#f3f3f3]", "text-[#573d21]");
-      event.target.classList.add("bg-[#573d21]", "text-[#f3f3f3]");
+      if (event && event.target && event.target.classList.contains("menu-tab-btn")) {
+        event.target.classList.remove("bg-[#f3f3f3]", "text-[#573d21]");
+        event.target.classList.add("bg-[#573d21]", "text-[#f3f3f3]");
+      }
 
-      const cards = document.querySelectorAll(".menu-card");
-      cards.forEach(card => {
-        if (category === "all" || card.getAttribute("data-category") === category) {
-          card.style.display = "flex";
+      const items = document.querySelectorAll(".menu-item");
+      items.forEach(item => {
+        if (category === "all" || item.getAttribute("data-category") === category) {
+          item.style.display = "flex";
         } else {
-          card.style.display = "none";
+          item.style.display = "none";
         }
       });
     }
@@ -1153,7 +1440,7 @@
       document.getElementById("lightboxModal").classList.add("hidden");
     }
 
-    // Cart / Tray System
+    // Cart / Morning Tray System
     let cart = [];
 
     function toggleCartDrawer() {
@@ -1164,7 +1451,6 @@
         drawer.classList.add("opacity-0", "pointer-events-none");
       }
     }
-    document.getElementById("cartBtn")?.addEventListener("click", toggleCartDrawer);
 
     function addToCart(title, price, category) {
       const existing = cart.find(item => item.title === title);
@@ -1174,7 +1460,6 @@
         cart.push({ title, price, category, quantity: 1 });
       }
       updateCartUI();
-      // Open drawer on add
       const drawer = document.getElementById("cartDrawer");
       drawer.classList.remove("opacity-0", "pointer-events-none");
     }
@@ -1198,19 +1483,19 @@
 
     function updateCartUI() {
       const container = document.getElementById("cartItemsContainer");
-      const badge = document.getElementById("cartCountBadge");
+      const headerBadge = document.getElementById("headerCartCount");
       const totalDisplay = document.getElementById("cartTotalPrice");
       const checkoutBtn = document.getElementById("checkoutBtn");
 
       const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      badge.innerText = totalItems;
+      if (headerBadge) headerBadge.innerText = totalItems;
 
       if (cart.length === 0) {
         container.innerHTML = `
           <div id="emptyCartNotice" class="py-12 text-center">
             <span class="text-3xl block mb-2">☕</span>
             <p class="font-serif-romie text-sm text-[#573d21]">Your tray is currently empty.</p>
-            <p class="font-condensed text-xs text-[#7c664d] uppercase mt-1">Select from our signature menu & viennoiserie.</p>
+            <p class="font-condensed text-xs text-[#7c664d] uppercase mt-1">Select from our signature roasts & 3-pack bakes.</p>
           </div>
         `;
         totalDisplay.innerText = "$0.00";
@@ -1228,8 +1513,8 @@
         html += `
           <div class="p-3 bg-[#ece0d2] border border-[#7c664d] flex justify-between items-center">
             <div>
-              <span class="text-[10px] font-mono text-[#7c664d] uppercase">${item.category}</span>
-              <h5 class="font-condensed font-bold text-sm text-[#573d21] uppercase">${item.title}</h5>
+              <span class="text-[9px] font-mono text-[#7c664d] uppercase">${item.category}</span>
+              <h5 class="font-condensed font-bold text-xs sm:text-sm text-[#573d21] uppercase">${item.title}</h5>
               <span class="font-serif-romie text-xs text-[#573d21]">$${item.price.toFixed(2)} each</span>
             </div>
             <div class="flex items-center gap-2">
@@ -1256,7 +1541,7 @@
     function handleNewsletter(e) {
       e.preventDefault();
       document.getElementById("newsletterEmail").value = "";
-      document.getElementById("newsletterSuccess").classList.remove("hidden");
+      document.getElementById("newsletterNotice").classList.remove("hidden");
     }
   </script>
 </body>

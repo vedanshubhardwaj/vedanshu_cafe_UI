@@ -529,8 +529,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           
           <!-- Card 1: Cold Brew & Rosé Bloom in Ice Bath -->
-          <div class="bg-[#f3f3f3] border border-[#7c664d] group cursor-pointer flex flex-col justify-between" onclick="addToCart('The Chilled Trio • 3-Pack Cold Harvest', 38.00, '3-Pack')">
-            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30">
+          <div class="bg-[#f3f3f3] border border-[#7c664d] group flex flex-col justify-between">
+            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30 cursor-pointer" onclick="openItemModal('The Chilled Micro-Lot Trio', 38.00, '3-Pack Collection', 'Single-origin cold extractions bottled fresh at dawn with floral washed Ethiopian and honey-processed Geisha.', 'COLD EXTRACTION • PEACH NECTAR • JASMINE', 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80')">
               <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Specialty cold coffee bottles" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
               <!-- Paper Tear Orange Stamp on photo (Matching Screenshot 1) -->
               <div class="absolute bottom-6 left-6 bg-[#efa164] border border-[#573d21] p-3 -rotate-6 text-[#573d21]">
@@ -538,16 +538,26 @@
                 <span class="font-mono text-[9px] uppercase tracking-wider block mt-0.5">Macerated</span>
               </div>
             </div>
-            <div class="p-5 text-center">
-              <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">01. The Chilled Micro-Lot Trio</h3>
-              <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Single-origin cold extractions bottled at dawn.</p>
-              <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$38.00</span>
+            <div class="p-5 text-center flex flex-col flex-grow justify-between">
+              <div>
+                <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">01. The Chilled Micro-Lot Trio</h3>
+                <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Single-origin cold extractions bottled at dawn.</p>
+                <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$38.00</span>
+              </div>
+              <div class="flex gap-2 mt-4 pt-3 border-t border-[#7c664d]/30">
+                <button onclick="openItemModal('The Chilled Micro-Lot Trio', 38.00, '3-Pack Collection', 'Single-origin cold extractions bottled fresh at dawn with floral washed Ethiopian and honey-processed Geisha.', 'COLD EXTRACTION • PEACH NECTAR • JASMINE', 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80')" class="flex-1 py-1.5 bg-[#f3f3f3] hover:bg-[#e1c6ab] border border-[#7c664d] text-[11px] font-condensed font-bold text-[#573d21] uppercase tracking-wider transition-colors">
+                  VIEW DETAILS
+                </button>
+                <button onclick="addToCart('The Chilled Micro-Lot Trio', 38.00, '3-Pack')" class="flex-1 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-[11px] font-condensed font-bold text-[#573d21] uppercase tracking-wider transition-colors">
+                  + ADD TO TRAY
+                </button>
+              </div>
             </div>
           </div>
 
           <!-- Card 2: 72-Hour Sourdough Viennoiserie Box -->
-          <div class="bg-[#f3f3f3] border border-[#7c664d] group cursor-pointer flex flex-col justify-between" onclick="addToCart('The Bakehouse Box • 3 Hearth Bakes', 18.00, '3-Pack')">
-            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30">
+          <div class="bg-[#f3f3f3] border border-[#7c664d] group flex flex-col justify-between">
+            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30 cursor-pointer" onclick="openItemModal('The Hearth Bakehouse Box', 18.00, 'Artisan Pastry Box', 'Cardamom knot, almond frangipane, and Valrhona dark chocolate swirl laminated with pure Normandy butter and wild sourdough levain.', 'CARDAMOM • NORMANDY BUTTER • 72-HR LEVAIN', 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80')">
               <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" alt="Artisan croissant box" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
               <!-- Paper Tear Terracotta Stamp on photo (Matching Screenshot 1) -->
               <div class="absolute bottom-6 right-6 bg-[#e3a36e] border border-[#573d21] p-3 rotate-3 text-[#573d21]">
@@ -555,16 +565,26 @@
                 <span class="font-mono text-[9px] uppercase tracking-wider block mt-0.5">Normandy Butter</span>
               </div>
             </div>
-            <div class="p-5 text-center">
-              <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">02. The Hearth Bakehouse Box</h3>
-              <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Cardamom knot, almond frangipane, & Valrhona swirl.</p>
-              <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$18.00</span>
+            <div class="p-5 text-center flex flex-col flex-grow justify-between">
+              <div>
+                <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">02. The Hearth Bakehouse Box</h3>
+                <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Cardamom knot, almond frangipane, & Valrhona swirl.</p>
+                <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$18.00</span>
+              </div>
+              <div class="flex gap-2 mt-4 pt-3 border-t border-[#7c664d]/30">
+                <button onclick="openItemModal('The Hearth Bakehouse Box', 18.00, 'Artisan Pastry Box', 'Cardamom knot, almond frangipane, and Valrhona dark chocolate swirl laminated with pure Normandy butter and wild sourdough levain.', 'CARDAMOM • NORMANDY BUTTER • 72-HR LEVAIN', 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80')" class="flex-1 py-1.5 bg-[#f3f3f3] hover:bg-[#e1c6ab] border border-[#7c664d] text-[11px] font-condensed font-bold text-[#573d21] uppercase tracking-wider transition-colors">
+                  VIEW DETAILS
+                </button>
+                <button onclick="addToCart('The Hearth Bakehouse Box', 18.00, '3-Pack')" class="flex-1 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-[11px] font-condensed font-bold text-[#573d21] uppercase tracking-wider transition-colors">
+                  + ADD TO TRAY
+                </button>
+              </div>
             </div>
           </div>
 
           <!-- Card 3: Wine Glasses & Tasting Flights -->
-          <div class="bg-[#f3f3f3] border border-[#7c664d] group cursor-pointer flex flex-col justify-between" onclick="addToCart('The Golden Hour Flight • Cupping Set', 44.00, '3-Pack')">
-            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30">
+          <div class="bg-[#f3f3f3] border border-[#7c664d] group flex flex-col justify-between">
+            <div class="relative aspect-square overflow-hidden border-b border-[#7c664d] bg-[#e1c6ab]/30 cursor-pointer" onclick="openItemModal('The Tasting Room Flight', 44.00, 'Sensory Cupping Flight', 'Three paired tasting glasses featuring washed Panama Geisha, Sidama natural cold drip, and wood-toasted honey loaf.', '3 VARIETALS • STEMWARE • SENSORY PAIRING', 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80')">
               <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80" alt="Coffee tasting glasses and ceramics" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
               <!-- Paper Tear Apricot Stamp on photo (Matching Screenshot 1) -->
               <div class="absolute top-6 left-6 bg-[#efa164] border border-[#573d21] p-3 -rotate-3 text-[#573d21]">
@@ -572,10 +592,20 @@
                 <span class="font-mono text-[9px] uppercase tracking-wider block mt-0.5">3 Varietals</span>
               </div>
             </div>
-            <div class="p-5 text-center">
-              <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">03. The Tasting Room Flight</h3>
-              <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Stemware, washed Geisha, and paired honey loaf.</p>
-              <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$44.00</span>
+            <div class="p-5 text-center flex flex-col flex-grow justify-between">
+              <div>
+                <h3 class="font-condensed text-base font-bold text-[#573d21] uppercase tracking-wider">03. The Tasting Room Flight</h3>
+                <p class="font-serif-romie text-xs text-[#573d21]/75 mt-1">Stemware, washed Geisha, and paired honey loaf.</p>
+                <span class="font-serif-romie font-bold text-sm text-[#573d21] mt-2 block">$44.00</span>
+              </div>
+              <div class="flex gap-2 mt-4 pt-3 border-t border-[#7c664d]/30">
+                <button onclick="openItemModal('The Tasting Room Flight', 44.00, 'Sensory Cupping Flight', 'Three paired tasting glasses featuring washed Panama Geisha, Sidama natural cold drip, and wood-toasted honey loaf.', '3 VARIETALS • STEMWARE • SENSORY PAIRING', 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80')" class="flex-1 py-1.5 bg-[#f3f3f3] hover:bg-[#e1c6ab] border border-[#7c664d] text-[11px] font-condensed font-bold text-[#573d21] uppercase tracking-wider transition-colors">
+                  VIEW DETAILS
+                </button>
+                <button onclick="addToCart('The Tasting Room Flight', 44.00, '3-Pack')" class="flex-1 py-1.5 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-[11px] font-condensed font-bold text-[#573d21] uppercase tracking-wider transition-colors">
+                  + ADD TO TRAY
+                </button>
+              </div>
             </div>
           </div>
 
@@ -706,7 +736,7 @@
           
           <!-- Item 1: Geisha V60 -->
           <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="coffee">
-            <div>
+            <div class="cursor-pointer" onclick="openItemModal('Panama Boquete Geisha V60', 9.50, 'Specialty Pour Over', 'Natural process micro-lot from Finca Deborah (1,950m elevation) extracted at 93°C on Japanese stone-filtered spring water.', 'JASMINE • PEACH NECTAR • BERGAMOT', 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=700&q=80')">
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=700&q=80" alt="Panama Geisha pour over" class="w-full h-full object-cover">
                 <span class="absolute top-2.5 right-2.5 bg-[#e3a36e] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
@@ -715,7 +745,7 @@
               </div>
               <div class="p-5">
                 <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Panama Boquete Geisha V60</h3>
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide hover:text-[#a85032] transition-colors">Panama Boquete Geisha V60</h3>
                   <span class="font-serif-romie font-bold text-sm text-[#573d21]">$9.50</span>
                 </div>
                 <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">JASMINE • PEACH NECTAR • BERGAMOT</span>
@@ -725,7 +755,7 @@
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Panama Boquete Geisha V60', 9.50, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
+              <button onclick="addToCart('Panama Boquete Geisha V60', 9.50, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
                 + ADD TO MORNING TRAY
               </button>
             </div>
@@ -733,7 +763,7 @@
 
           <!-- Item 2: Cardamom Knot -->
           <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="viennoiserie">
-            <div>
+            <div class="cursor-pointer" onclick="openItemModal('Cardamom & Toasted Rye Knot', 5.75, 'Hearth Viennoiserie', 'Wild levain brioche twisted with freshly ground green cardamom pods and crunchy Demerara sugar crystals.', 'GREEN CARDAMOM • NORMANDY BUTTER • DEMERARA', 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80')">
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" alt="Cardamom pastry" class="w-full h-full object-cover">
                 <span class="absolute top-2.5 right-2.5 bg-[#d8deb7] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
@@ -742,7 +772,7 @@
               </div>
               <div class="p-5">
                 <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Cardamom & Toasted Rye Knot</h3>
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide hover:text-[#a85032] transition-colors">Cardamom & Toasted Rye Knot</h3>
                   <span class="font-serif-romie font-bold text-sm text-[#573d21]">$5.75</span>
                 </div>
                 <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">GREEN CARDAMOM • NORMANDY BUTTER</span>
@@ -752,7 +782,7 @@
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Cardamom & Toasted Rye Knot', 5.75, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
+              <button onclick="addToCart('Cardamom & Toasted Rye Knot', 5.75, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
                 + ADD TO MORNING TRAY
               </button>
             </div>
@@ -760,7 +790,7 @@
 
           <!-- Item 3: Smoked Flat White -->
           <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="coffee">
-            <div>
+            <div class="cursor-pointer" onclick="openItemModal('Smoked Oak Salt Flat White', 6.00, 'Signature Espresso', 'Double espresso with velvety micro-foam, finished with oak barrel smoked sea salt and raw date nectar.', 'OAT MILK • PRALINE • BARREL WOOD SALT', 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=700&q=80')">
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=700&q=80" alt="Flat white" class="w-full h-full object-cover">
                 <span class="absolute top-2.5 right-2.5 bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
@@ -769,7 +799,7 @@
               </div>
               <div class="p-5">
                 <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Smoked Oak Salt Flat White</h3>
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide hover:text-[#a85032] transition-colors">Smoked Oak Salt Flat White</h3>
                   <span class="font-serif-romie font-bold text-sm text-[#573d21]">$6.00</span>
                 </div>
                 <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">OAT MILK • PRALINE • BARREL WOOD SALT</span>
@@ -779,7 +809,7 @@
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Smoked Oak Salt Flat White', 6.00, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
+              <button onclick="addToCart('Smoked Oak Salt Flat White', 6.00, 'Coffee')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
                 + ADD TO MORNING TRAY
               </button>
             </div>
@@ -787,7 +817,7 @@
 
           <!-- Item 4: Fig & Ricotta Tartine -->
           <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="sourdough">
-            <div>
+            <div class="cursor-pointer" onclick="openItemModal('Whipped Ricotta & Valley Fig Tartine', 12.50, 'Woodfired Hearth Plate', 'Thick cut 36-hour sourdough hearth loaf, wood-toasted with sheep milk ricotta, local figs, and lavender wildflower honey.', 'LOCAL FIGS • THYME HONEY • PISTACHIO', 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80')">
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80" alt="Whipped ricotta tartine" class="w-full h-full object-cover">
                 <span class="absolute top-2.5 right-2.5 bg-[#d8deb7] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
@@ -796,7 +826,7 @@
               </div>
               <div class="p-5">
                 <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Whipped Ricotta & Valley Fig Tartine</h3>
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide hover:text-[#a85032] transition-colors">Whipped Ricotta & Valley Fig Tartine</h3>
                   <span class="font-serif-romie font-bold text-sm text-[#573d21]">$12.50</span>
                 </div>
                 <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">LOCAL FIGS • THYME HONEY • PISTACHIO</span>
@@ -806,7 +836,7 @@
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Whipped Ricotta & Valley Fig Tartine', 12.50, 'Sourdough')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
+              <button onclick="addToCart('Whipped Ricotta & Valley Fig Tartine', 12.50, 'Sourdough')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
                 + ADD TO MORNING TRAY
               </button>
             </div>
@@ -814,7 +844,7 @@
 
           <!-- Item 5: Double Almond Croissant -->
           <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="viennoiserie">
-            <div>
+            <div class="cursor-pointer" onclick="openItemModal('Twice-Baked Almond Frangipane', 6.50, 'Hearth Viennoiserie', 'Sourdough croissant soaked in citrus blossom syrup, stuffed with roasted almond cream and toasted Marcona flakes.', 'MARCONA ALMONDS • ORANGE BLOSSOM • TWICE BAKED', 'https://images.unsplash.com/photo-1549903072-7e6e0bedb7fb?auto=format&fit=crop&w=700&q=80')">
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1549903072-7e6e0bedb7fb?auto=format&fit=crop&w=700&q=80" alt="Almond croissant" class="w-full h-full object-cover">
                 <span class="absolute top-2.5 right-2.5 bg-[#e3a36e] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
@@ -823,7 +853,7 @@
               </div>
               <div class="p-5">
                 <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Twice-Baked Almond Frangipane</h3>
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide hover:text-[#a85032] transition-colors">Twice-Baked Almond Frangipane</h3>
                   <span class="font-serif-romie font-bold text-sm text-[#573d21]">$6.50</span>
                 </div>
                 <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">MARCONA ALMONDS • ORANGE BLOSSOM</span>
@@ -833,7 +863,7 @@
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Twice-Baked Almond Frangipane', 6.50, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
+              <button onclick="addToCart('Twice-Baked Almond Frangipane', 6.50, 'Pastry')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
                 + ADD TO MORNING TRAY
               </button>
             </div>
@@ -841,7 +871,7 @@
 
           <!-- Item 6: Harvest Squash Latte -->
           <div class="menu-item bg-[#ece0d2] border border-[#7c664d] flex flex-col justify-between" data-category="seasonal">
-            <div>
+            <div class="cursor-pointer" onclick="openItemModal('Harvest Squash & Ceylon Cinnamon', 6.75, 'Seasonal Harvest Roast', 'Real oven-roasted kabocha squash puree reduced with raw spices and dark maple, paired with Ethiopian espresso.', 'ROASTED KABOCHA • NUTMEG • DARK MAPLE', 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80')">
               <div class="relative aspect-[16/11] overflow-hidden border-b border-[#7c664d]">
                 <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" alt="Autumn latte" class="w-full h-full object-cover">
                 <span class="absolute top-2.5 right-2.5 bg-[#efa164] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
@@ -850,7 +880,7 @@
               </div>
               <div class="p-5">
                 <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
-                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide">Harvest Squash & Ceylon Cinnamon</h3>
+                  <h3 class="font-condensed font-bold text-base text-[#573d21] uppercase tracking-wide hover:text-[#a85032] transition-colors">Harvest Squash & Ceylon Cinnamon</h3>
                   <span class="font-serif-romie font-bold text-sm text-[#573d21]">$6.75</span>
                 </div>
                 <span class="font-mono text-[10px] text-[#7c664d] uppercase block mb-1">ROASTED KABOCHA • NUTMEG • DARK MAPLE</span>
@@ -860,7 +890,7 @@
               </div>
             </div>
             <div class="p-5 pt-0">
-              <button onclick="addToCart('Harvest Squash & Ceylon Cinnamon', 6.75, 'Seasonal')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase">
+              <button onclick="addToCart('Harvest Squash & Ceylon Cinnamon', 6.75, 'Seasonal')" class="w-full py-2 bg-[#e1c6ab] hover:bg-[#e3a36e] border border-[#573d21] text-xs font-condensed font-bold text-[#573d21] tracking-wider uppercase transition-colors">
                 + ADD TO MORNING TRAY
               </button>
             </div>
@@ -890,19 +920,20 @@
         <!-- Asymmetrical Masonry Grid -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
           
-          <div class="md:col-span-7 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80', 'The Cast Iron Roasting Hearth & Copper Brew Bar')">
-            <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80" alt="Coffee bar" class="w-full h-80 md:h-[420px] object-cover transition-transform duration-700 group-hover:scale-105">
-            <div class="p-3 bg-[#f3f3f3] border-t border-[#7c664d] flex justify-between text-xs font-condensed font-bold uppercase text-[#573d21]">
-              <span>Cast Iron Brew Bar & Sourdough Cooling Rack</span>
-              <span class="font-mono text-[#7c664d]">08:15 AM</span>
+          <!-- Real Café Front Storefront & Entrance (Main Full-Width Showcase) -->
+          <div class="md:col-span-12 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('cafe-front.jpg', 'The Café Front Storefront & Veranda — Refuel Eating Point')">
+            <div class="relative h-80 sm:h-[420px] md:h-[480px] overflow-hidden">
+              <img src="cafe-front.jpg" alt="The Café front storefront and entrance" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute top-4 left-4 bg-[#efa164] border border-[#573d21] text-[#573d21] px-3 py-1 text-xs font-condensed font-bold uppercase tracking-wider">
+                MAIN STOREFRONT & VERANDA
+              </div>
             </div>
-          </div>
-
-          <div class="md:col-span-5 border border-[#7c664d] bg-[#f3f3f3] overflow-hidden group cursor-pointer" onclick="openLightbox('cafe-front.jpg', 'The Café Front & Main Entrance')">
-            <img src="cafe-front.jpg" alt="The Café front storefront and entrance" class="w-full h-80 md:h-[420px] object-cover transition-transform duration-700 group-hover:scale-105">
-            <div class="p-3 bg-[#f3f3f3] border-t border-[#7c664d] flex justify-between text-xs font-condensed font-bold uppercase text-[#573d21]">
-              <span>The Café Front & Main Entrance</span>
-              <span class="font-mono text-[#7c664d]">09:30 AM</span>
+            <div class="p-4 bg-[#f3f3f3] border-t border-[#7c664d] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs font-condensed font-bold uppercase text-[#573d21]">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-serif-romie font-bold">The Café Front Storefront & Entrance Veranda</span>
+                <span class="hidden sm:inline text-[#7c664d] font-normal">• Glasshouse Seating & Open Outdoor Courtyard</span>
+              </div>
+              <span class="font-mono text-[#7c664d]">WALK-INS WELCOME DAILY</span>
             </div>
           </div>
 
@@ -1252,6 +1283,53 @@
   </div>
 
   <!-- =========================================================================
+       13. LOGICAL ITEM DETAIL MODAL (Opens on Card/Image Click)
+       ========================================================================= -->
+  <div id="itemDetailModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop" onclick="closeItemModal()">
+    <div class="relative max-w-lg w-full bg-[#f3f3f3] border-2 border-[#573d21] p-6 sm:p-7" onclick="event.stopPropagation()">
+      <button onclick="closeItemModal()" class="absolute top-4 right-4 z-10 p-1.5 bg-[#f3f3f3] border border-[#7c664d] text-[#573d21] hover:bg-[#e1c6ab]">
+        ✕
+      </button>
+      <div class="aspect-[16/10] overflow-hidden border border-[#7c664d] mb-4 bg-[#ece0d2] relative">
+        <img id="modalItemImg" src="" alt="Item Image" class="w-full h-full object-cover">
+        <span id="modalItemBadge" class="absolute top-2.5 left-2.5 bg-[#efa164] border border-[#573d21] text-[#573d21] text-[10px] font-condensed font-bold px-2 py-0.5 uppercase">
+          HARVEST SELECTION
+        </span>
+      </div>
+      <div class="mb-5">
+        <span id="modalItemCategory" class="text-[10px] font-mono text-[#7c664d] uppercase block"></span>
+        <div class="flex justify-between items-baseline border-b border-[#7c664d]/30 pb-2 mb-2">
+          <h3 id="modalItemTitle" class="font-condensed font-bold text-xl text-[#573d21] uppercase tracking-wide"></h3>
+          <span id="modalItemPrice" class="font-serif-romie font-bold text-lg text-[#573d21]"></span>
+        </div>
+        <div id="modalItemNotes" class="font-mono text-[11px] text-[#7c664d] uppercase mb-2"></div>
+        <p id="modalItemDesc" class="font-serif-romie text-xs text-[#573d21]/85 leading-relaxed"></p>
+      </div>
+      <div class="flex gap-2">
+        <button id="modalAddBtn" class="flex-1 btn-terracotta py-2.5 text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21]">
+          + ADD TO TRAY
+        </button>
+        <button onclick="closeItemModal(); document.getElementById('reserve').scrollIntoView({behavior:'smooth'});" class="flex-1 btn-peach-sand py-2.5 text-xs font-condensed font-bold uppercase tracking-wider text-[#573d21]">
+          BOOK TABLE FOR THIS →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       14. DISCREET TOAST NOTIFICATION (Does NOT Hijack Screen)
+       ========================================================================= -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-[#573d21] text-[#f3f3f3] border-2 border-[#e3a36e] px-4 py-3 flex items-center gap-4 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none">
+    <div class="flex items-center gap-2">
+      <span class="text-[#e3a36e] font-bold">✓</span>
+      <span id="toastText" class="font-condensed font-bold text-xs uppercase tracking-wider">Item added to tray</span>
+    </div>
+    <button onclick="toggleCartDrawer()" class="px-2.5 py-1 bg-[#e3a36e] hover:bg-[#efa164] text-[#573d21] text-[11px] font-condensed font-bold uppercase tracking-wider transition-colors pointer-events-auto">
+      VIEW TRAY →
+    </button>
+  </div>
+
+  <!-- =========================================================================
        13. SCRIPT: GSAP SCROLLTRIGGER ANIMATIONS & INTERACTIVE SYSTEMS
        ========================================================================= -->
   <script>
@@ -1440,6 +1518,42 @@
       document.getElementById("lightboxModal").classList.add("hidden");
     }
 
+    // Logical Item Detail Modal (Shows item story & logical actions)
+    function openItemModal(title, price, category, desc, notes, img) {
+      document.getElementById("modalItemTitle").innerText = title;
+      document.getElementById("modalItemPrice").innerText = `$${price.toFixed(2)}`;
+      document.getElementById("modalItemCategory").innerText = category;
+      document.getElementById("modalItemDesc").innerText = desc;
+      document.getElementById("modalItemNotes").innerText = notes;
+      document.getElementById("modalItemImg").src = img;
+      
+      const addBtn = document.getElementById("modalAddBtn");
+      addBtn.onclick = () => {
+        addToCart(title, price, category);
+        closeItemModal();
+      };
+      
+      document.getElementById("itemDetailModal").classList.remove("hidden");
+    }
+
+    function closeItemModal() {
+      document.getElementById("itemDetailModal").classList.add("hidden");
+    }
+
+    // Non-intrusive Toast Notification (Does NOT hijack the screen with tray)
+    function showToast(title) {
+      const toast = document.getElementById("toastNotification");
+      const toastText = document.getElementById("toastText");
+      if (toast && toastText) {
+        toastText.innerText = `Added "${title}" to your tray`;
+        toast.classList.remove("translate-y-20", "opacity-0", "pointer-events-none");
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+          toast.classList.add("translate-y-20", "opacity-0", "pointer-events-none");
+        }, 3200);
+      }
+    }
+
     // Cart / Morning Tray System
     let cart = [];
 
@@ -1460,8 +1574,8 @@
         cart.push({ title, price, category, quantity: 1 });
       }
       updateCartUI();
-      const drawer = document.getElementById("cartDrawer");
-      drawer.classList.remove("opacity-0", "pointer-events-none");
+      // Show gentle toast instead of forcing drawer open!
+      showToast(title);
     }
 
     function removeFromCart(title) {
